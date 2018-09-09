@@ -2,13 +2,17 @@
 import React, { PureComponent } from 'react'
 import { connect } from 'dva'
 import { Icon } from 'antd-mobile'
-import { Header } from 'components'
+import { Header, TimeTree } from 'components'
 
 class CoinMessage extends PureComponent {
 
     render() {
         return (
-            <Header />
+            <div>
+                <Header />
+                <TimeTree />
+            </div>
+            
         );
     }
 }
