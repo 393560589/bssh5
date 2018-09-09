@@ -5,6 +5,7 @@ import Expand from './Expand'
 import GradBox from './GradBox'
 import GradList from './GradList'
 import CommentList from './CommentList'
+import ListGroup from './ListGroup'
 
 export {
     Header,
@@ -13,5 +14,6 @@ export {
     Expand,
     GradBox,
     GradList,
-    CommentList
+    CommentList,
+    ListGroup
 };

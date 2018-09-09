@@ -2,6 +2,7 @@
 import React, { PureComponent } from 'react'
 import { connect } from 'dva'
 import { Icon } from 'antd-mobile'
+import Link from 'umi/link'
 import { Header, TimeTree } from 'components'
 
 class CoinMessage extends PureComponent {
@@ -10,7 +11,9 @@ class CoinMessage extends PureComponent {
         return (
             <div>
                 <Header />
-                <TimeTree />
+                <Link to='/BaiWiki'>
+                    <TimeTree />
+                </Link>
             </div>
             
         );
