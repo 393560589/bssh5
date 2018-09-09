@@ -1,0 +1,7 @@
+{
+    "name": "GradBox",
+    "version": "1.0.0",
+    "private": true,
+    "main": "./GradBox.js"
+}
+  
