@@ -1,0 +1,239 @@
+
+html, body, :global(#root) {
+  height: 100%;
+  background-color: #fff;
+  // font-family: Microsoft Yahei,SimSun,Helvetica;
+  /* font-family: PingFang-SC-Bold, '微软雅黑', Times, TimesNR, 'New Century Schoolbook', Georgia, 'New York', serif; */
+}
+
+//ios用户点击一个链接，会出现一个半透明灰色遮罩, 如果想要禁用，可设置-webkit-tap-highlight-color的alpha值为0去除灰色半透明遮罩；
+//android用户点击一个链接，会出现一个边框或者半透明灰色遮罩, 不同生产商定义出来额效果不一样，可设置-webkit-tap-highlight-color的alpha值为0去除部分机器自带的效果；
+//winphone系统,点击标签产生的灰色半透明背景，能通过设置<meta name="msapplication-tap-highlight" content="no">去掉；
+//特殊说明：有些机型去除不了，如小米2。对于按钮类还有个办法，不使用a或者input标签，直接用div标签
+a,button,input,textarea {
+    -webkit-tap-highlight-color: rgba(0,0,0,0);
+   // -webkit-user-modify:read-write-plaintext-only; //-webkit-user-modify有个副作用，就是输入法不再能够输入多个字符
+}
+// 也可以
+//* { -webkit-tap-highlight-color: rgba(0,0,0,0); }
+
+* {
+  letter-spacing: 1px;
+}
+
+input {
+  border: 0;
+  padding: 0;
+}
+
+:global {
+
+  /* 宽高 */
+  .h--100 {
+    height: 100%;
+  }
+  .h-50 {
+    height: 0.5rem;
+  }
+
+  /* 间距 */
+  .ml-16 {
+    margin-left: 0.16rem;
+  }
+  .ml-10 {
+    margin-left: 0.1rem;
+  }
+  .mr-10 {
+    margin-right: 0.1rem;
+  }
+
+  .mt-5 {
+    margin-bottom: 0.05rem;
+  }
+  .mt-10 {
+    margin-bottom: 0.1rem;
+  }
+
+  .pt-5 {
+    padding-top: 0.05rem;
+  }
+  .pb-5 {
+    padding-bottom: 0.05rem;
+  }
+  .pl-6 {
+    padding-left: 0.06rem;
+  }
+  .pl-10 {
+    padding-left: 0.1rem;
+  }
+  .pr-6 {
+    padding-right: 0.06rem;
+  }
+  .plr-15 {
+    padding-left: 0.15rem;
+    padding-right: 0.15rem;
+  }
+  .ptb-20 {
+    padding-top: 0.2rem;
+    padding-bottom: 0.2rem;
+  }
+  .pl-16 {
+    padding-left: 0.16rem;
+  }
+  .pr-16 {
+    padding-right: 0.16rem;
+  }
+  .pl-20 {
+    padding-left: 0.2rem;
+  }
+  .pr-20 {
+    padding-right: 0.2rem;
+  }
+  /* 颜色 */
+  .bg-ff {
+    background-color: #fff;
+  }
+  .bg-f5 {
+    background-color: #f5f5f5;
+  }
+  .bg-fa {
+    background-color: #fafafa;
+  }
+
+  .bg-trans {
+    background-color: transparent;
+  }
+
+  /* 布局 */
+  .ds-f {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .ds-fa {
+    display: flex;
+    align-items: center;
+  }
+  .ds-fj {
+    display: flex;
+    justify-content: center;
+  }
+  .ds-fr {
+    flex-direction: row;
+  }
+  .ds-fc {
+    flex-direction: column;
+  }
+
+  .gray {
+    font-size: 0.14rem;
+    color: #666;
+  }
+
+
+  /* 覆盖antd样式 */
+  .am-icon-md {
+    width: 30px !important;
+    height: 30px !important;
+  }
+
+  @media (-webkit-min-device-pixel-ratio: 2) {
+    border: none !important;
+  }
+
+  .am-button-ghost::before {
+    border: 0 !important;
+  }
+}
+
+@keyframes nprogress-spinner {
+  0% {
+    transform: rotate(0deg);
+  }
+
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+/*! minireset.css v0.0.3 | MIT License | github.com/jgthms/minireset.css */
+html,
+body,
+p,
+ol,
+ul,
+li,
+dl,
+dt,
+dd,
+blockquote,
+figure,
+fieldset,
+legend,
+textarea,
+pre,
+iframe,
+hr,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  margin: 0;
+  padding: 0;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-size: 100%;
+  font-weight: normal;
+}
+
+ul {
+  list-style: none;
+}
+
+button,
+input,
+select,
+textarea {
+  margin: 0;
+}
+
+html {
+  box-sizing: border-box;
+}
+
+*, *:before, *:after {
+  box-sizing: inherit;
+}
+
+img,
+embed,
+iframe,
+object,
+audio,
+video {
+  height: auto;
+  max-width: 100%;
+}
+
+iframe {
+  border: 0;
+}
+
+table {
+  border-collapse: collapse;
+  border-spacing: 0;
+}
+
+td,
+th {
+  padding: 0;
+  text-align: left;
+}
