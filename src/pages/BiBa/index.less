@@ -1,0 +1,62 @@
+.container {
+  background: #F2F2F5;
+  min-height: 100vh;
+  padding-bottom: 0.1rem;
+  .header {
+    display: flex;
+    background: #fff;
+    padding: .15rem;
+    img {
+      width: 0.6rem;
+      height: 0.6rem;
+      margin-right: 0.13rem;
+    }
+    h3 {
+      font-size: .18rem;
+      color: #000;
+      font-weight: bold;
+    }
+    span {
+      color: #666;
+      font-size: .14rem;
+      font-weight: 500;
+      white-space: pre-wrap;
+    }
+  }
+  .post {
+    padding: .15rem;
+    background: #fff;
+    margin-top: 0.08rem;
+    font-size: .15rem;
+    .top {
+      display: flex;
+      margin-bottom: 0.11rem;
+      img {
+        width: 0.34rem;
+        height: 0.34rem;
+        margin-right: .15rem;
+      }
+      & > div {
+        h4 {
+          color: #000;
+          font-size: .15rem;
+          font-weight: 500;
+        }
+        span {
+          font-size: .12rem;
+          color: #666;
+        }
+      }
+    }
+  }
+  .add-icon {
+    display: inline-block;
+    position: fixed;
+    bottom: .08rem;
+    left: 50%;
+    margin-left: -0.22rem;
+    width: 0.44rem;
+    height: 0.44rem;
+    background: url('../../assets/add.png') no-repeat center / contain;
+  }
+}
