@@ -1,7 +1,7 @@
-
+import * as server from '../services'
 export default {
 
-  namespace: 'example',
+  namespace: 'index',
 
   state: {},
 
@@ -11,8 +11,9 @@ export default {
   },
 
   effects: {
-    *fetch({ payload }, { call, put }) {
-      yield put({ type: 'save' });
+    *test({ payload,callback=()=>{} }, { call, put }) {
+      const response = yield call(server.getbanner,payload)
+      callback(response)
     },
   },
 

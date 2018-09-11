@@ -8,5 +8,11 @@ export default {
         pages: `${__dirname}/src/pages`,
         assets: `${__dirname}/src/assets`,
     },
-    publicPath: '/dist/static/'
+    publicPath: '/dist/static/',
+    proxy: {
+      '/mobile': {
+        target: 'http://bitss.vip/',
+        changeOrigin: true,
+      },
+    }
 }

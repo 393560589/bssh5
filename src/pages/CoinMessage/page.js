@@ -4,9 +4,18 @@ import { connect } from 'dva'
 import { Icon } from 'antd-mobile'
 import Link from 'umi/link'
 import { Header, TimeTree } from 'components'
-
+@connect(({index})=>({...index}))
 class CoinMessage extends PureComponent {
-
+    componentDidMount(){
+      const {dispatch} = this.props;
+      dispatch({
+        type:'index/test',
+        payload:{},
+        callback:(data)=>{
+          console.log(data)
+        }
+      })
+    }
     render() {
         return (
             <div>
@@ -15,7 +24,7 @@ class CoinMessage extends PureComponent {
                     <TimeTree />
                 </Link>
             </div>
-            
+
         );
     }
 }
