@@ -1,7 +1,7 @@
 import React, { PureComponent } from 'react'
 import { connect } from 'dva'
 import style from './index.less'
-import { ListGroup } from 'components'
+import { ListGroup, CommentGroup, CommentInput } from 'components'
 
 class ArticleDetail extends PureComponent {
 
@@ -44,6 +44,14 @@ class ArticleDetail extends PureComponent {
 
                 <div className="mt-8 bg-ff">
                     <ListGroup />
+                </div>
+
+                <div className="mt-8 bg-ff">
+                    <CommentGroup />
+                </div>
+
+                <div className="mt-8 bg-ff">
+                    <CommentInput />
                 </div>
 
             </div>

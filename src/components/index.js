@@ -6,6 +6,8 @@ import GradBox from './GradBox'
 import GradList from './GradList'
 import CommentList from './CommentList'
 import ListGroup from './ListGroup'
+import CommentGroup from './CommentGroup'
+import CommentInput from './CommentInput'
 
 export {
     Header,
@@ -15,5 +17,7 @@ export {
     GradBox,
     GradList,
     CommentList,
-    ListGroup
+    ListGroup,
+    CommentGroup,
+    CommentInput
 };
