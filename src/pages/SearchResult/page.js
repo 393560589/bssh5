@@ -1,6 +1,7 @@
 import React, { PureComponent } from 'react'
 import styles from './index.less'
 import resultApi from '../../services/search'
+import router from 'umi/router'
 
 class SearchResult extends PureComponent {
   constructor() {
@@ -10,18 +11,22 @@ class SearchResult extends PureComponent {
       ba: '',
       post: '',
       news: '',
-      hotWords: ''
+      hotWords: '',
+      error: false
     }
   }
 
   componentDidMount() {
-    this.fetchResult()
+    const {location: { query: keyword }} = router
+    this.fetchResult(keyword)
   }
 
-  fetchResult = async () => {
-    const result = await resultApi({keyword: 'eos'})
-    if (result === null ) {
-      // 搜索结果为空
+  fetchResult = async (keyword) => {
+    const result = await resultApi({keyword})
+    console.log(result)
+    if (result === null || result === undefined) {
+      // 搜索结果为空或请求出错
+      this.setState({error: true})
     } else {
       const { baike, ba, news, about_post: post, hot_words: hotWords } = result
       this.setState({baike, ba, news, post, hotWords})
@@ -98,7 +103,7 @@ class SearchResult extends PureComponent {
     return (
       <section className="p-15 mb-8">
         <h3>关于EOS的帖子</h3>
-        {this.state.post && this.state.post.map(p => <p className="mb-8">{`${p.post_title}[${p.board_title}]`}</p>)}
+        {this.state.post && this.state.post.map(p => <p className="mb-8" key={p.id}>{`${p.post_title}[${p.board_title}]`}</p>)}
         {/* <p className="mb-8">7月31日BTC、EOS交易策略【比特币吧</p>
         <p>爆炒区块链3.0概念，EOS想超ETH (以太坊)，没那么简单!【以太坊吧】</p> */}
       </section>
@@ -110,7 +115,7 @@ class SearchResult extends PureComponent {
     return (
       <section className="p-15 mb-8">
         <h3>近期关于eos的相关新闻</h3>
-        {news && news.map(n => <p className="mb-8"><a href={n.url}>{n.title}</a></p>)}
+        {news && news.map(n => <p className="mb-8" key={n.title}><a href={n.url}>{n.title}</a></p>)}
         {/* <p className="mb-8">号称超越ETH、吊打EOS，技术流IOST的底气到底在哪里？</p>
         <p className="mb-8">白皮说 | EOS是下一代区块链的王者还是一个百亿美元的骗局?</p>
         <p className="mb-8">EOS相较比特币更去中心化？！| EOSLAOMAO · 宁话区块链 第6集 去中心化</p> */}
@@ -164,20 +169,26 @@ class SearchResult extends PureComponent {
 
   render() {
     return (
-      <div className={styles.container}>
-        {this.renderPrice()}
-        {this.renderBaiWiki()}
-        {this.renderBa()}
-        {/* {this.renderApp()} */}
-        {this.renderPost()}
-        {this.renderNews()}
-        {this.renderOther()}
-        {this.renderOther()}
-        {this.renderOther()}
-        {this.renderOther()}
-        {this.renderHots()}
-        {this.renderPagination()}
-      </div>
+      this.state.error
+        ? (<div className={styles.empty}>
+            <img src={require('../../assets/result/empty@2x.png')} alt=""/>
+            <p>未找到{`"${router.location.query.keyword}"`}相关结果</p>
+        </div>)
+        : (<div className={styles.container}>
+          {this.renderPrice()}
+          {this.renderBaiWiki()}
+          {this.renderBa()}
+          {/* {this.renderApp()} */}
+          {this.renderPost()}
+          {this.renderNews()}
+          {this.renderOther()}
+          {this.renderOther()}
+          {this.renderOther()}
+          {this.renderOther()}
+          {this.renderHots()}
+          {this.renderPagination()}
+        </div>)
+      
     )
   }
 }
