@@ -1,28 +1,95 @@
 import React, { PureComponent } from 'react'
 import styles from './index.less'
+import resultApi from '../../services/search'
 
 class SearchResult extends PureComponent {
+  constructor() {
+    super()
+    this.state = {
+      baike: '',
+      ba: '',
+      post: '',
+      news: '',
+      hotWords: ''
+    }
+  }
+
+  componentDidMount() {
+    this.fetchResult()
+  }
+
+  fetchResult = async () => {
+    const result = await resultApi({keyword: 'eos'})
+    if (result === null ) {
+      // 搜索结果为空
+    } else {
+      const { baike, ba, news, about_post: post, hot_words: hotWords } = result
+      this.setState({baike, ba, news, post, hotWords})
+    }
+  }
+
+  renderPrice = () => {
+    return (
+      <section className="p-15">
+        <section className={styles.top}>
+          <span>1EOS=</span>
+          <p style={{fontSize: '.24rem'}}>4.93USD</p>
+        </section>
+        <section className={styles.top}>
+          <h4 style={{fontSize: '.12rem', marginBottom: '.2rem'}}>-0.0986USD(-2.0%)</h4>
+          <span style={{fontSize: '.15rem'}}>市值:$44.68亿<br/>全球交易量(24h):$5.34亿</span>
+        </section>
+      </section>
+    )
+  }
+
   renderBaiWiki = () => {
+    const {article_title: title, article_img: img, article_description: content} = this.state.baike
     return (
       <section className="p-15 mb-8">
-        <h3>柚子/Enterprise Operation System/<em>EOS</em>百科</h3>
+        <h3>{title}</h3>
           <div className="ds-fs">
-            <img src={require('../../assets/image.png')} alt="" className={styles.image}/>
-            <p>领导开发的类似操作系统的区块链架构平台，旨在实现分布式应用的性能扩展。EOS提供账户，身份验证...</p>
+            <img src={img} alt="" className={styles.image}/>
+            <p
+              ref={v => this.p = v}
+              dangerouslySetInnerHTML={{__html: content}}
+              style={{maxHeight: '.6rem'}}
+              className={styles.hiddenText}
+              onClick={() => this.p.style.maxHeight = ''}
+            />
           </div>
       </section>
     )
   }
 
   renderBa = () => {
+    const {smbo_title: title, smbo_logo: logo, smbo_description: desc, post} = this.state.ba
     return (
       <section className="p-15 mb-8">
-        <h3>EOS吧</h3>
+        <h3>{title}</h3>
         <div className="ds-fs mb-8">
-          <img src={require('../../assets/image.png')} alt="" className={styles.image}/>
-          <span>asidhfisapd</span>
+          <img src={logo} alt="" className={styles.image}/>
+          <div>
+            {post && post.map(p => <p key={p.id}>{p.post_title}</p>)}
+          </div>
         </div>
-        <span>EOS铁粉交流区，欢迎大佬们进驻！</span>
+        <span>{desc}</span>
+      </section>
+    )
+  }
+
+  renderApp = () => {
+    return (
+      <section>
+        <section>
+          <img src="" alt=""/>
+          <section>
+            <h3>币安</h3>
+            <span>行情资讯</span>
+          </section>
+        </section>
+        <p>简介：萨帝就不附带身边发生的手机封闭 u 吧</p>
+        <a href="" className={styles.downloadBtn}>立即下载</a>
       </section>
     )
   }
@@ -31,19 +98,22 @@ class SearchResult extends PureComponent {
     return (
       <section className="p-15 mb-8">
         <h3>关于EOS的帖子</h3>
-        <p className="mb-8">7月31日BTC、EOS交易策略【比特币吧</p>
-        <p>爆炒区块链3.0概念，EOS想超ETH (以太坊)，没那么简单!【以太坊吧】</p>
+        {this.state.post && this.state.post.map(p => <p className="mb-8">{`${p.post_title}[${p.board_title}]`}</p>)}
+        {/* <p className="mb-8">7月31日BTC、EOS交易策略【比特币吧</p>
+        <p>爆炒区块链3.0概念，EOS想超ETH (以太坊)，没那么简单!【以太坊吧】</p> */}
       </section>
     )
   }
 
   renderNews = () => {
+    const { news } = this.state
     return (
       <section className="p-15 mb-8">
         <h3>近期关于eos的相关新闻</h3>
-        <p className="mb-8">号称超越ETH、吊打EOS，技术流IOST的底气到底在哪里？</p>
+        {news && news.map(n => <p className="mb-8"><a href={n.url}>{n.title}</a></p>)}
+        {/* <p className="mb-8">号称超越ETH、吊打EOS，技术流IOST的底气到底在哪里？</p>
         <p className="mb-8">白皮说 | EOS是下一代区块链的王者还是一个百亿美元的骗局?</p>
-        <p className="mb-8">EOS相较比特币更去中心化？！| EOSLAOMAO · 宁话区块链 第6集 去中心化</p>
+        <p className="mb-8">EOS相较比特币更去中心化？！| EOSLAOMAO · 宁话区块链 第6集 去中心化</p> */}
       </section>
     )
   }
@@ -58,7 +128,7 @@ class SearchResult extends PureComponent {
     )
   }
 
-  renderTops = () => {
+  renderHots = () => {
     return (
       <section>
         <h2 className={styles["top-searchs"]}>搜索热点</h2>
@@ -95,15 +165,17 @@ class SearchResult extends PureComponent {
   render() {
     return (
       <div className={styles.container}>
+        {this.renderPrice()}
         {this.renderBaiWiki()}
         {this.renderBa()}
+        {/* {this.renderApp()} */}
         {this.renderPost()}
         {this.renderNews()}
         {this.renderOther()}
         {this.renderOther()}
         {this.renderOther()}
         {this.renderOther()}
-        {this.renderTops()}
+        {this.renderHots()}
         {this.renderPagination()}
       </div>
     )

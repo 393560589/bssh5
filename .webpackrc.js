@@ -11,7 +11,7 @@ export default {
     publicPath: '/dist/static/',
     proxy: {
       '/mobile': {
-        target: 'http://bitss.vip/',
+        target: 'http://bitss.vip',
         changeOrigin: true,
       },
     }
