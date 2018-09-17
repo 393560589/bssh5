@@ -1,39 +1,51 @@
 import React, { PureComponent } from 'react'
 import styles from './index.less'
+import router from 'umi/router'
+import { connect } from 'dva';
+import { formate } from '../../utils/date';
 
+
+@connect(({biba, loading}) => ({...biba, loading}))
 class BiBa extends PureComponent {
-  renderPost = () => {
+  componentDidMount() {
+    const { dispatch } = this.props
+    const {location: { query: id }} = router
+    console.log(router)
+    dispatch({
+      type: 'biba/fetchBarInfo',
+      payload: {
+        id: 8//
+      }
+    })
+  }
+
+  renderPost = ({id, headimgurl, username, post_title, addtime}) => {
     return (
-      <section className={styles.post}>
+      <section className={styles.post} key={id} onClick={() => router.replace(`/BiBa?id=8&len=15&page=2`)}>
         <div className={styles.top}>
-          <img src={require('../../assets/avatar.png')} alt=""/>
+          <img src={headimgurl} alt=""/>
           <div>
-            <h4>王牌出击</h4>
-            <span>2018-8-31</span>
+            <h4>{username}</h4>
+            <span>{formate(addtime)}</span>
           </div>
         </div>
-        <p>股吧访谈之首席投资人:进入国际的A股，新起点量变质一定会变，股吧访谈之首席投资人:进入国际的A股，新起点量变质一定会变</p>
+        <p>{post_title}</p>
       </section>
     )
   }
 
   render() {
+    const {smbo_title, attention, article_num, smbo_logo} = this.props.barInfo
     return (
       <div className={styles.container}>
         <div className={styles.header}>
-          <img src={require('../../assets/bar-icon.png')} alt=""/>
+          <img src={smbo_logo} alt=""/>
           <div>
-            <h3>以太坊吧</h3>
-            <span>关注12.4w   帖子84.9w</span>
+            <h3>{smbo_title}</h3>
+            <span>关注{attention}   帖子{article_num}</span>
           </div>
         </div>
-        {this.renderPost()}
-        {this.renderPost()}
-        {this.renderPost()}
-        {this.renderPost()}
-        {this.renderPost()}
-        {this.renderPost()}
-        {this.renderPost()}
+        {this.props.articleList.map(post => this.renderPost(post))}
         <span className={styles["add-icon"]}></span>
       </div>
     )
