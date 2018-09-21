@@ -1,15 +1,18 @@
 import React from 'react'
 import style from './ListGroup.less'
 
-const ListGroup = () => {
+const ListGroup = (props) => {
+    const { data } = props;
+
   	return (
     	<div className={style.list_group}>
             <ListTitle />
 
-            <ListItem />
-            <ListItem />
-            <ListItem />
-            <ListItem />
+            {
+                data.map((item, index) => {
+                    return <ListItem key={index} data={item} />
+                })
+            }
     	</div>
   	);
 };
@@ -20,19 +23,21 @@ const ListTitle = () => {
     )
 }
 
-const ListItem = () => {
+const ListItem = (props) => {
+    const { data } = props;
+
     return(
         <div className={style.list_item}>
             <div className={style.list_item_left}>
                 <div className={style.list_item_title}>
-                    通证“C位”战—金融行业 | TokenInsight
+                    {data.title}
                 </div>
                 <div className={style.list_item_time}>
-                    金色财经 · 2018-07-28
+                    {data.resource} · {data.time_num}
                 </div>
             </div>
             <div className={style.list_item_right}>
-                <img src={require("../../assets/yay.jpg")} alt="" />
+                <img src={data.thumbnail} alt="" />
             </div>
         </div>
     )

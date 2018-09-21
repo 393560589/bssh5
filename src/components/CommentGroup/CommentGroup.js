@@ -15,7 +15,7 @@ const CommentGroup = () => {
 
 const CommentTitle = () => {
     return(
-        <div className={style.comment_title}>推荐文章</div>
+        <div className={style.comment_title}>全部评论</div>
     )
 }
 

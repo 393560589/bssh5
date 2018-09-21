@@ -1,0 +1,110 @@
+.share_wrapper {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+
+    .share_top {
+
+        .share_detail {
+            margin: 0 .2rem;
+
+            .share_detail_title {
+                line-height: .25rem;
+                font-size: .18rem;
+                font-weight: bold;
+                color: #333;
+                padding: .16rem 0 .12rem;
+                border-bottom: 1px solid #f3f3f3;
+            }
+
+            .share_detail_time {
+                font-size: .12rem;
+                color: #999;
+                padding: .13rem 0;
+                border-bottom: 1px solid #f3f3f3;
+            }
+
+            .share_detail_content {
+                line-height: .22rem;
+                font-size: .15rem;
+                color: #333;
+                padding-top: .13rem;
+            }
+        }
+    }
+
+    .share_bottom {
+
+        .share_detail_range {
+            display: flex;
+            align-items: center;
+            font-size: .16rem;
+            color: #060606;
+            padding: .06rem .20rem;
+
+            img {
+                width: .13rem;
+                height: .12rem;
+            }
+        }
+
+        .share_detail_img {
+
+            img {
+                width: 100%;
+                height: 1.25rem;
+            }
+        }
+    }
+}
+
+.share_box {
+    width: 100%;
+    height: 1.3rem;
+    background-color: #fff;
+
+    .share_icon {
+        height: .85rem;
+        display: flex;
+        align-items: center;
+        justify-content: space-around;
+
+        .share_icon_box {
+            display: flex;
+            flex-direction: column;
+            
+            img {
+
+                &.img1 {
+                    width: .34rem;
+                    height: .29rem;
+                }
+                &.img2 {
+                    width: .28rem;
+                    height: .28rem;
+                }
+                &.img3 {
+                    width: .36rem;
+                    height: .3rem;
+                }
+            }
+
+            
+            span {
+                font-size: .12rem;
+                color: #333;
+                padding-top: .05rem;
+            }
+        }
+    }
+
+    .share_cancel {
+        height: .45rem;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: .18rem;
+        color: #888;
+    }
+}
