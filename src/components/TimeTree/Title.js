@@ -2,7 +2,8 @@ import React from 'react'
 import style from './Index.less'
 
 const Title = (props) => {
-    const { title } = props;
+	const { title } = props;
+	console.log(title);
 
   	return (
     	<div className={style.title}>

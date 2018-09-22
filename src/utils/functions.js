@@ -1,3 +1,4 @@
+const weeks = ['日', '一', '二', '三', '四', '五', '六'];
 
 function getQueryString(name) {
     var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)", "i");
@@ -11,6 +12,40 @@ function getQueryString(name) {
     }else{
         return null;
     }
+}
+
+// 时间格式化
+function formatData(time) {
+    var d = time ? new Date(time) : new Date();
+    var year = d.getFullYear();
+    var month = change(d.getMonth()+1);
+    var day = change(d.getDate());
+    var hour = change(d.getHours());
+    var minute = change(d.getMinutes());
+    var second = change(d.getSeconds());
+
+    function change(t){
+        if(t<10){
+        return "0"+t;
+        }else{
+        return t;
+        }
+    }
+    return year + '-' + month + '-' + day + ' ' + hour + ':' + minute + ':' + second;
+}
+
+// 和上一个时间是否是同一天
+function isQuentDay(nowTime, lastTime) {
+    var nowDate = new Date(nowTime);
+    var lastDate = new Date(lastTime);
+    var weekStr = nowDate.getFullYear() + '年' + (nowDate.getMonth() + 1) + '月' + nowDate.getDate() + '日' + ' 星期' + weeks[parseInt(nowDate.getDay())];
+    if(!lastTime) {
+        return weekStr;
+    }
+    if((nowDate.getFullYear() === lastDate.getFullYear()) && (nowDate.getMonth() === lastDate.getMonth()) && (nowDate.getDate() === lastDate.getDate())) {
+        return false;
+    }
+    return weekStr;
 }
 
 //判断浏览器内核
@@ -94,5 +129,7 @@ export {
     getTimeFormat,
     isSameDate,
     phoneFormat,
-    getQueryString
+    getQueryString,
+    formatData,
+    isQuentDay
 }

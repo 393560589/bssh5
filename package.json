@@ -9,6 +9,8 @@
   "dependencies": {
     "axios": "^0.18.0",
     "dva": "^2.4.0",
+    "dva-loading": "^2.0.5",
+    "react-pullload": "^1.1.0",
     "umi": "^1.0.0",
     "umi-plugin-dva": "^0.7.1"
   },

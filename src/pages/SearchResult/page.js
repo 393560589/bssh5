@@ -167,10 +167,14 @@ class SearchResult extends PureComponent {
     )
   }
 
+  test = () => {
+    window.postMessage('to app')
+  }
+
   render() {
     return (
       this.state.error
-        ? (<div className={styles.empty}>
+        ? (<div className={styles.empty} onClick={this.test}>
             <img src={require('../../assets/result/empty@2x.png')} alt=""/>
             <p>未找到{`"${router.location.query.keyword}"`}相关结果</p>
         </div>)

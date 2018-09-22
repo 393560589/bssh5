@@ -3,9 +3,36 @@ import { connect } from 'dva'
 import style from './index.less'
 import { ListGroup, CommentGroup, CommentInput } from 'components'
 
+@connect(({article})=>({...article}))
 class ArticleDetail extends PureComponent {
 
+    componentDidMount() {
+        const that = this;
+        const { dispatch } = that.props;
+
+        // 获取文章详情和列表
+        dispatch({
+            type: 'article/getArticleDetail',
+            payload: {
+                id: '1'
+            }
+        })
+
+        // 获取评论列表
+        dispatch({
+            type: 'article/getCommentList',
+            payload: {
+                id: '1',
+                page: 1,
+                len: 10
+            }
+        });
+    }
+
     render() {
+        const { articleDetail, commentList } = this.props;
+        const { content, about = [] } = articleDetail;
+
         return (
             <div className='mh-100 bg-f5'>
                 <div className={style.title}>无论你来不来，我们都在这儿等你</div>
@@ -43,11 +70,11 @@ class ArticleDetail extends PureComponent {
                 </div>
 
                 <div className="mt-8 bg-ff">
-                    <ListGroup />
+                    <ListGroup data={about} />
                 </div>
 
                 <div className="mt-8 bg-ff">
-                    <CommentGroup />
+                    <CommentGroup data={commentList} />
                 </div>
 
                 <div className="mt-8 bg-ff">
