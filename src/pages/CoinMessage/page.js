@@ -30,10 +30,13 @@ class CoinMessage extends PureComponent {
         },
         hasMore: true
     }
-
+    componentWillUnmount(){
+      console.log('走掉')
+      window.postMessage(JSON.stringify({type: 'leave'}), '*')
+    }
     componentDidMount(){
         const hei = this.state.height - 55;//ReactDOM.findDOMNode(this.ptr).offsetTop;
-
+        window.postMessage(JSON.stringify({type: 'enter'}), '*')
         this.getCoinList();
         setTimeout(() => this.setState({
             height: hei,
@@ -47,19 +50,19 @@ class CoinMessage extends PureComponent {
         //     const top = wrapper.getBoundingClientRect().top;
         //     const windowHeight = window.screen.height;
         //     console.log(top);
-    
+
         //     if (top && top < windowHeight) {
         //       // 当 wrapper 已经被滚动到页面可视范围之内触发
         //       loadMoreData();
         //     }
         // }
-        
+
         // window.addEventListener('scroll', function () {
         //     console.log('scroll');
         //     if (this.state.hasMore) {
         //         return;
         //     }
-    
+
         //     timer && clearTimeout(timer);
         //     timer = setTimeout(callback, 50);
         // }.bind(this), false);
@@ -159,9 +162,9 @@ class CoinMessage extends PureComponent {
                             console.log(this.state.panigation);
                             this.getCoinList(true);
                         });
-                        
+
                     }}
-                >   
+                >
                     <div ref="content">
                         <div style={{height: '.1rem'}}></div>
                         <TimeTree data={coinList} />
