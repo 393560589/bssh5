@@ -7,5 +7,6 @@ import axios from 'axios'
 
 // 获取文章详情
 export async function getWikiDetail(params) {
+  console.log(params)
   return axios.get('/mobile/mobile_interface/baikeDetail', { params: { ...params }})
 }

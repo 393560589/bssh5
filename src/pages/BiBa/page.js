@@ -7,16 +7,10 @@ import { formate } from '../../utils/date';
 
 @connect(({biba, loading}) => ({...biba, loading}))
 class BiBa extends PureComponent {
-  componentDidMount() {
-    const { dispatch } = this.props
-    const {location: { query: id }} = router
-    console.log(router)
-    dispatch({
-      type: 'biba/fetchBarInfo',
-      payload: {
-        id: 8//
-      }
-    })
+
+  post = () => {
+    const { id } = this.props.barInfo
+    window.postMessage(JSON.stringify({type: 'post', id}), '*')
   }
 
   renderPost = ({id, headimgurl, username, post_title, addtime}) => {
@@ -35,6 +29,9 @@ class BiBa extends PureComponent {
   }
 
   render() {
+    if (this.props.barInfo === null) {
+      return <div style={{fontSize: '14px'}}>无结果</div>
+    }
     const {smbo_title, attention, article_num, smbo_logo} = this.props.barInfo
     return (
       <div className={styles.container}>
@@ -46,7 +43,7 @@ class BiBa extends PureComponent {
           </div>
         </div>
         {this.props.articleList.map(post => this.renderPost(post))}
-        <span className={styles["add-icon"]}></span>
+        <span className={styles["add-icon"]} onClick={this.post}></span>
       </div>
     )
   }

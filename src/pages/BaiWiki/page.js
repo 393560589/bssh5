@@ -2,6 +2,7 @@ import React, { PureComponent } from 'react'
 import { connect } from 'dva'
 import { HeaderBar, Expand, GradBox, GradList, CommentList } from 'components'
 import style from './index.less'
+import router from 'umi/router'
 
 const titles = ['', '', '', '人物介绍', '', '钱包介绍', '交易所介绍', '资本介绍', '媒体介绍'];
 
@@ -9,12 +10,13 @@ const titles = ['', '', '', '人物介绍', '', '钱包介绍', '交易所介绍
 class BaiWiki extends PureComponent {
 
     componentDidMount() {
+        const {location: { query: {id} }} = router
         const { dispatch } = this.props;
 
         dispatch({
             type: 'wiki/getWikiDetail',
             payload: {
-                id: '10'
+                id
             }
         })
     }

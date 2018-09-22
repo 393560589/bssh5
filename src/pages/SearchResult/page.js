@@ -15,7 +15,8 @@ class SearchResult extends PureComponent {
       others: [],
       error: false,
       flowPage: 1,
-      keyword: ''
+      keyword: '',
+      totalPage: ''
     }
   }
 
@@ -24,6 +25,11 @@ class SearchResult extends PureComponent {
     this.setState({keyword})
     this.fetchResult(keyword)
     this.fetchFlowResult(keyword)
+    window.postMessage(JSON.stringify({type: 'enter'}), '*')
+  }
+
+  componentWillUnmount() {
+    window.postMessage(JSON.stringify({type: 'leave'}), '*')
   }
 
   fetchResult = async (keyword) => {
@@ -46,7 +52,7 @@ class SearchResult extends PureComponent {
       // this.setState({error: true})
     } else {
       // const { baike, ba, news, about_post: post, hot_words: hotWords } = result
-      this.setState({others: flowResult.news})
+      this.setState({others: flowResult.news, totalPage: flowResult.count})
     }
   }
 
@@ -63,19 +69,22 @@ class SearchResult extends PureComponent {
 
   goNext = () => { // 
     // const {location: { query: { keyword } }} = router
-    const {keyword} = this.state
+    const {keyword, totalPage} = this.state
     this.setState((prev => {
-      if (prev.flowPage > 1) {
-        return { flowPage: prev.flowPage - 1}
+      if (prev.flowPage < totalPage) {
+        return { flowPage: prev.flowPage + 1}
       }
     }))
     this.fetchFlowResult(keyword)
+    window.scroll(0, 0)
   }
 
   search = (keyword) => {
     this.setState({keyword, flowPage: 1})
+    router.push(`/SearchResult?keyword=${keyword}`)
     this.fetchResult(keyword)
     this.fetchFlowResult(keyword)
+    window.scroll(0, 0)
   }
 
   renderPrice = () => {
@@ -94,9 +103,9 @@ class SearchResult extends PureComponent {
   }
 
   renderBaiWiki = () => {
-    const {article_title: title, article_img: img, article_description: content} = this.state.baike
+    const {article_title: title, article_img: img, article_description: content, id} = this.state.baike
     return (
-      <section className="p-15 mb-8">
+      <section className="p-15 mb-8" onClick={() => router.push(`/BaiWiKi?id=${id}`)}>
         <h3>{title}</h3>
           <div className="ds-fs">
             <img src={img} alt="" className={styles.image}/>
@@ -113,9 +122,9 @@ class SearchResult extends PureComponent {
   }
 
   renderBa = () => {
-    const {smbo_title: title, smbo_logo: logo, smbo_description: desc, post} = this.state.ba
+    const {smbo_title: title, smbo_logo: logo, smbo_description: desc, post, id} = this.state.ba
     return (
-      <section className="p-15 mb-8">
+      <section className="p-15 mb-8" onClick={() => router.push({pathname: '/BiBa', query: {id}})}>
         <h3>{title}</h3>
         <div className="ds-fs mb-8">
           <img src={logo} alt="" className={styles.image}/>
@@ -161,9 +170,6 @@ class SearchResult extends PureComponent {
       <section className="p-15 mb-8">
         <h3>近期关于{this.state.keyword}的相关新闻</h3>
         {news && news.map(n => <p className="mb-8" key={n.title}><a href={n.url}>{n.title}</a></p>)}
-        {/* <p className="mb-8">号称超越ETH、吊打EOS，技术流IOST的底气到底在哪里？</p>
-        <p className="mb-8">白皮说 | EOS是下一代区块链的王者还是一个百亿美元的骗局?</p>
-        <p className="mb-8">EOS相较比特币更去中心化？！| EOSLAOMAO · 宁话区块链 第6集 去中心化</p> */}
       </section>
     )
   }
@@ -201,7 +207,7 @@ class SearchResult extends PureComponent {
     return (
       <section className="mt-8 ds-f p-8">
         <img src={require('../../assets/arrow-left.png')} alt="" className={styles.icon} onClick={this.goPrev}/>
-        <span className={styles.page}>第 1 页</span>
+        <span className={styles.page}>第 {this.state.flowPage} 页</span>
         <img src={require('../../assets/arrow-right.png')} alt="" className={styles.icon} onClick={this.goNext}/>
       </section>
     )
@@ -214,7 +220,7 @@ class SearchResult extends PureComponent {
   render() {
     return (
       this.state.error
-        ? (<div className={styles.empty} onClick={this.test}>
+        ? (<div className={styles.empty}>
             <img src={require('../../assets/result/empty@2x.png')} alt=""/>
             <p>未找到{`"${router.location.query.keyword}"`}相关结果</p>
         </div>)
