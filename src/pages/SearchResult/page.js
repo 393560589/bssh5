@@ -67,7 +67,7 @@ class SearchResult extends PureComponent {
     this.fetchFlowResult(keyword)
   }
 
-  goNext = () => { // 
+  goNext = () => { //
     // const {location: { query: { keyword } }} = router
     const {keyword, totalPage} = this.state
     this.setState((prev => {
@@ -156,7 +156,7 @@ class SearchResult extends PureComponent {
   renderPost = () => {
     return (
       <section className="p-15 mb-8">
-        <h3>关于{this.state.keyword}的帖子</h3>
+        <h3>关于<b className={'_high'}>{this.state.keyword}</b>的帖子</h3>
         {this.state.post && this.state.post.map(p => <p className="mb-8" key={p.id}>{`${p.post_title}[${p.board_title}]`}</p>)}
         {/* <p className="mb-8">7月31日BTC、EOS交易策略【比特币吧</p>
         <p>爆炒区块链3.0概念，EOS想超ETH (以太坊)，没那么简单!【以太坊吧】</p> */}
@@ -168,17 +168,22 @@ class SearchResult extends PureComponent {
     const { news } = this.state
     return (
       <section className="p-15 mb-8">
-        <h3>近期关于{this.state.keyword}的相关新闻</h3>
+        <h3>近期关于<b className={'_high'}>{this.state.keyword}</b>的相关新闻</h3>
         {news && news.map(n => <p className="mb-8" key={n.title}><a href={n.url}>{n.title}</a></p>)}
       </section>
     )
   }
 
   renderOther = ({title, description, url, id}) => {
+    let html = `<b class="_high">${this.state.keyword}</b>`;
+    let key = new RegExp(this.state.keyword,'igm')
+    title = title.replace(key, html);
+    description = description.replace(key, html);
+
     return (
       <section key={id} className="p-15 mb-8">
-        <h3>{title}</h3>
-        <p className="mb-8">{description}</p>
+        <h3 dangerouslySetInnerHTML={{__html:title}} />
+        <p className="mb-8" dangerouslySetInnerHTML={{__html:description}}/>
         <a href={url} className={styles.link}>查看更多</a>
       </section>
     )
@@ -235,7 +240,7 @@ class SearchResult extends PureComponent {
           {this.renderHots()}
           {this.renderPagination()}
         </div>)
-      
+
     )
   }
 }
