@@ -31,8 +31,11 @@ class CoinMessage extends PureComponent {
         hasMore: true
     }
     componentWillUnmount(){
-      console.log('走掉')
+      //console.log('走掉')
       window.postMessage(JSON.stringify({type: 'leave'}), '*')
+    }
+    onShare(){
+      window.postMessage(JSON.stringify({type: 'share'}), '*')
     }
     componentDidMount(){
         const hei = this.state.height - 55;//ReactDOM.findDOMNode(this.ptr).offsetTop;
@@ -166,8 +169,8 @@ class CoinMessage extends PureComponent {
                     }}
                 >
                     <div ref="content">
-                        <div style={{height: '.1rem'}}></div>
-                        <TimeTree data={coinList} />
+                        <div style={{height: '.1rem'}}/>
+                        <TimeTree data={coinList} onShare={this.onShare}/>
                         <div className={style.loadMore} onClick={() => this.loadMoreData()}>{hasMore ? '加载更多' : '没有更多数据了'}加载更多</div>
                     </div>
                 </PullToRefresh>

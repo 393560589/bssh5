@@ -6,9 +6,11 @@ import Content from './Content';
 import { formatData, isQuentDay } from 'utils/functions'
 //import Link from 'umi/link';
 import router from 'umi/router'
+import Share from './Share'
+
 let currentTime = '';
 const TimeTree = (props) => {
-    const { data } = props;
+    const { data,onShare } = props;
 
     return(
         <div className={style.time_box}>
@@ -19,11 +21,14 @@ const TimeTree = (props) => {
                     }
                     let week = isQuentDay(parseInt(parseInt(item.created_at) * 1000), parseInt(currentTime));
                     return(
-                        <div key={item.id}>
-                            <div onClick={()=>router.push('/CoinMessageShare')}>
+                        <div key={item.id} style={{marginTop:'10px'}}>
+                            <div>
                                 { week ? <Title title={ week }/> : "" }
-                                <SecTitle title={formatData(parseInt(item.created_at) * 1000)}/>
-                                <Content title="" content={item.content.length > 100 ? (item.content.substr(0, 100) + '...') : item.content} />
+                                <div onClick={()=>router.push('/CoinMessageShare')}>
+                                  <SecTitle title={formatData(parseInt(item.created_at) * 1000)}/>
+                                  <Content title="" content={item.content.length > 100 ? (item.content.substr(0, 100) + '...') : item.content} />
+                                </div>
+                                <Share onShare={onShare}/>
                             </div>
                         </div>
                     )
