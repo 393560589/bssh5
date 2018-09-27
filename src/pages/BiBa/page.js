@@ -7,6 +7,12 @@ import { formate } from '../../utils/date';
 
 @connect(({biba, loading}) => ({...biba, loading}))
 class BiBa extends PureComponent {
+  componentDidMount() {
+    const { dispatch } = this.props
+    const { location: { query } } = router
+    dispatch({type: 'biba/fetchList', payload: query})
+    dispatch({type: 'biba/fetchBarInfo', payload: query})
+  }
 
   post = () => {
     const { id } = this.props.barInfo

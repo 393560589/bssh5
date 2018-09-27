@@ -7,6 +7,7 @@ class SearchResult extends PureComponent {
   constructor() {
     super()
     this.state = {
+      app: '',
       baike: '',
       ba: '',
       post: '',
@@ -138,17 +139,18 @@ class SearchResult extends PureComponent {
   }
 
   renderApp = () => {
+    const { img, title, description, url } = this.state.app
     return (
       <section>
         <section>
-          <img src="" alt=""/>
+          <img src={img} alt="app logo"/>
           <section>
-            <h3>币安</h3>
-            <span>行情资讯</span>
+            <h3>{title}</h3>
+            {/* <span>行情资讯</span> */}
           </section>
         </section>
-        <p>简介：萨帝就不附带身边发生的手机封闭 u 吧</p>
-        <a href="" className={styles.downloadBtn}>立即下载</a>
+        <p>{description}</p>
+        <a href={url} className={styles.downloadBtn}>立即下载</a>
       </section>
     )
   }
@@ -223,6 +225,7 @@ class SearchResult extends PureComponent {
   }
 
   render() {
+    const { baike, ba, app, post, news, others } = this.state
     return (
       this.state.error
         ? (<div className={styles.empty}>
@@ -231,12 +234,12 @@ class SearchResult extends PureComponent {
         </div>)
         : (<div className={styles.container}>
           {this.renderPrice()}
-          {this.renderBaiWiki()}
-          {this.renderBa()}
-          {/* {this.renderApp()} */}
-          {this.renderPost()}
-          {this.renderNews()}
-          {this.state.others.map(item => this.renderOther(item))}
+          {baike && this.renderBaiWiki()}
+          {ba && this.renderBa()}
+          {app && this.renderApp()}
+          {post && post.length && this.renderPost()}
+          {news && news.length && this.renderNews()}
+          {others.map(item => this.renderOther(item))}
           {this.renderHots()}
           {this.renderPagination()}
         </div>)

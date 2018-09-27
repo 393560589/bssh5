@@ -11,8 +11,8 @@ export default {
     setup({ dispatch, history }) {
       return history.listen(({pathname, query}) => {
         if (pathname === '/BiBa') {
-          dispatch({type: 'fetchList', payload: query})
-          dispatch({type: 'fetchBarInfo', payload: query})
+          // dispatch({type: 'fetchList', payload: query})
+          // dispatch({type: 'fetchBarInfo', payload: query})
         }
       })
     },
