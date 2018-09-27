@@ -15,8 +15,8 @@ class BiBa extends PureComponent {
   }
 
   post = () => {
-    const { id } = this.props.barInfo
-    window.postMessage(JSON.stringify({type: 'post', id}), '*')
+    const { id, smbo_title } = this.props.barInfo
+    window.postMessage(JSON.stringify({type: 'post', id, title: smbo_title}), '*')
   }
 
   renderPost = ({id, headimgurl, username, post_title, addtime}) => {
