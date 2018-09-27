@@ -40,8 +40,8 @@ class SearchResult extends PureComponent {
       // 搜索结果为空或请求出错
       this.setState({error: true})
     } else {
-      const { baike, ba, news, about_post: post, hot_words: hotWords } = result
-      this.setState({baike, ba, news, post, hotWords})
+      const { baike, ba, news, about_post: post, hot_words: hotWords, app } = result
+      this.setState({baike, ba, news, post, hotWords, app})
     }
   }
 
