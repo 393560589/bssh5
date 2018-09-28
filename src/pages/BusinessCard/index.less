@@ -1,0 +1,131 @@
+.BusinessCardWrappper{
+    width: 100%;
+    height: 100%;
+    background: #F2F2F5;
+    position: relative;
+
+    .BusinessCard_title{
+        height: .5rem;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        background: #FFF;
+        padding: 0 .15rem;
+
+        .BusinessCard_title_icon{
+            width: .22rem;
+            height: .22rem;
+        }
+
+        span{
+            font-size: .18rem;
+        }
+    }
+
+    .BusinessCard_title_main{
+        width: 100%;
+        height: 2.3rem;
+        background: url('../../assets/businessCard/background.png') no-repeat;
+        position: absolute;
+        top: 50%;
+        left: 0;
+        margin-top: -1.15rem;
+        padding: .25rem;
+
+        .BusinessCard_title_main_info{
+            display: flex;
+            justify-content: space-between;
+
+            .BusinessCard_title_main_info_box{
+                display: flex;
+
+                .BusinessCard_title_main_info_img{
+                    width: .5rem;
+                    height: .5rem;
+                    border-radius: 50%;
+                }
+        
+                .BusinessCard_title_main_name{
+                    margin-left: .15rem;
+
+                    h5{
+                        color: #F2F2F5;
+                        font-size: .18rem;
+                        letter-spacing: .15rem;
+                        margin-bottom: .09rem;
+                    }
+
+                    p{
+                        color: #ACACB7;
+                        font-size: .1rem;
+                    }
+                }
+                
+            }
+
+            .BusinessCard_title_main_erweima{
+                display: flex;
+                flex-direction: column;
+                justify-content: space-between;
+                align-items: center;
+
+                .BusinessCard_title_main_erweima_img{
+                    width: .35rem;
+                    height: .35rem;
+                }
+
+                span{
+                    font-size: .1rem;
+                    color: #ACACB7;
+                    margin-top: .04rem;
+                }
+            }
+        }
+
+        .BusinessCard_recommend{
+            width: 100%;
+            position: relative;
+            top: .35rem;
+            left: 0;
+            padding-left: .15rem;
+            
+            .BusinessCard_recommend_list{
+                display: flex;
+                margin-bottom: .2rem;
+                align-items: center;
+
+                img{
+                    width: .17rem;
+                    height: .17rem;
+                }
+
+                .borderBg{
+                    margin: 0 .15rem;
+                    width: .01rem;
+                    height: .13rem;
+                    background: #ACACB7;
+                    color: #ACACB7;
+                }
+
+                .BusinessCard_recommend_list_desc{
+                    flex-direction: column;
+
+                    h6{
+                        font-size: .1rem;
+                        color: #FFF;
+                    }
+
+                    p{
+                        width: 2.3rem;
+                        font-size: .1rem;
+                        color: #6D6D74;
+                        overflow: hidden;
+                        white-space: nowrap;
+                        box-sizing: border-box;
+                        text-overflow: ellipsis;
+                    }
+                }
+            }
+        }
+    }
+}

@@ -15,13 +15,20 @@ class BiBa extends PureComponent {
   }
 
   post = () => {
+<<<<<<< Updated upstream
     const { id, smbo_title } = this.props.barInfo
     window.postMessage(JSON.stringify({type: 'post', id, title: smbo_title}), '*')
+=======
+    const { id } = this.props.barInfo
+    console.log(this.props)
+    window.postMessage(JSON.stringify({type: 'post', id}), '*')
+>>>>>>> Stashed changes
   }
 
   renderPost = ({id, headimgurl, username, post_title, addtime}) => {
+    console.log(id)
     return (
-      <section className={styles.post} key={id} onClick={() => router.replace(`/BiBa?id=8&len=15&page=2`)}>
+      <section className={styles.post} key={id} onClick={() => router.replace(`/BiBaDetail?id=${id}`)}>
         <div className={styles.top}>
           <img src={headimgurl} alt=""/>
           <div>

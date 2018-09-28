@@ -17,6 +17,11 @@ const ListGroup = (props) => {
   	);
 };
 
+const redirectToDetail = (rediectToUrl) => {
+    if (!rediectToUrl) return;
+    window.location.href = rediectToUrl;
+}
+
 const ListTitle = () => {
     return(
         <div className={style.list_title}>推荐文章</div>
@@ -27,7 +32,7 @@ const ListItem = (props) => {
     const { data } = props;
 
     return(
-        <div className={style.list_item}>
+        <div className={style.list_item} onClick={ () => { redirectToDetail( data.url || false ) } }>
             <div className={style.list_item_left}>
                 <div className={style.list_item_title}>
                     {data.title}
@@ -42,5 +47,7 @@ const ListItem = (props) => {
         </div>
     )
 }
+
+
 
 export default ListGroup;
