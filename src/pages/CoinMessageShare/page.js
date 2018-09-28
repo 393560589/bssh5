@@ -1,8 +1,8 @@
 
 import React, { PureComponent } from 'react'
 import { connect } from 'dva'
-import { Drawer } from 'antd-mobile';
-
+//import { Drawer } from 'antd-mobile';
+import { getQueryString } from '../../utils/functions'
 import style from './index.less'
 
 @connect(({coin})=>({...coin}))
@@ -18,15 +18,17 @@ class CoinMessageShare extends PureComponent {
         // 获取币讯列表接口
         const that = this;
         const { dispatch } = that.props;
-
+        getQueryString('id') &&
         dispatch({
             type: 'coin/getCoinDetail',
             payload: {
-                id: '52488'
+                id: getQueryString('id')
             }
         })
     }
-
+    share(){
+      window.postMessage(JSON.stringify({type: 'share',data:window.location.href}), '*')
+    }
     renderRange = (range) => {
         let length = parseInt(range, 10);
         let data = [];
@@ -44,25 +46,31 @@ class CoinMessageShare extends PureComponent {
 
         return (
             <div className={style.share_wrapper}>
+              <div style={{flex:1}}>
                 <div className={style.share_top}>
-                    <img src={require('../../assets/coin/banner.png')} alt="" />
-                    <div className={style.share_detail}>
-                        {/* <div className={style.share_detail_title}>{ coinDetail. }</div> */}
-                        <div className={style.share_detail_time}>{ coinDetail && coinDetail.created_at }</div>
-                        <div className={style.share_detail_content}>{ coinDetail && coinDetail.content }</div>
-                    </div>
+                  <img src={require('../../assets/coin/banner.png')} alt="" />
+                  <div className={style.share_detail}>
+                    {/* <div className={style.share_detail_title}>{ coinDetail. }</div> */}
+                    <div className={style.share_detail_time}>{ coinDetail && coinDetail.created_at }</div>
+                    <div className={style.share_detail_content}>{ coinDetail && coinDetail.content }</div>
+                  </div>
                 </div>
                 <div className={style.share_bottom}>
-                    <div className={style.share_detail_range}>
-                        重要程度：
-                        { coinDetail && coinDetail.grade && that.renderRange(coinDetail.grade) }
-                    </div>
-                    <div className={style.share_detail_img}>
-                        <img src={require('../../assets/yay.jpg')} alt="" />
-                    </div>
+                  <div className={style.share_detail_range}>
+                    重要程度：
+                    { coinDetail && coinDetail.grade && that.renderRange(coinDetail.grade) }
+                  </div>
+                  <div style={{fontSize:'.14rem',color:'#666'}} onClick={()=>this.share()}>
+                    分享
+                  </div>
                 </div>
 
-                <Drawer
+              </div>
+
+              <div className={style.share_detail_img}>
+                <img src={require('../../assets/yay.jpg')} alt="" />
+              </div>
+               {/* <Drawer
                     className="my-drawer"
                     style={{ minHeight: document.documentElement.clientHeight }}
                     enableDragHandle
@@ -73,7 +81,7 @@ class CoinMessageShare extends PureComponent {
                     onOpenChange={this.onOpenChange}
                 >
                     分享
-                </Drawer>
+                </Drawer>*/}
             </div>
         );
     }

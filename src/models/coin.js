@@ -5,7 +5,9 @@ export default {
 
     state: {
         coinList: [],
-        coinDetail: ''
+        coinDetail: '',
+        CoinId:'',
+        shareurl:''
     },
 
     subscriptions: {
@@ -16,7 +18,7 @@ export default {
     effects: {
         *getCoinList({ payload, callback = () => {} }, { call, put }) {
             const res = yield call(server.getCoinList, payload)
-            
+
             if(res.data && res.data.status === 200) {
 				yield put({
 					type: 'updateCoinList',
@@ -30,7 +32,7 @@ export default {
         },
         *getFirstCoinList({ payload, callback = () => {} }, { call, put }) {
             const res = yield call(server.getCoinList, payload)
-            
+
             if(res.data && res.data.status === 200) {
 				yield put({
 					type: 'refreshCoinList',
@@ -45,7 +47,7 @@ export default {
         *getCoinDetail({ payload }, { call, put }) {
             const res = yield call(server.getCoinDetail, payload)
             console.log(res);
-            
+
             if(res.data && res.data.status === 200) {
 				yield put({
 					type: 'setCoinDetail',
@@ -56,6 +58,11 @@ export default {
     },
 
     reducers: {
+        update(state,{payload}){
+          return {
+            ...state,...payload
+          }
+        },
         // 更新
         updateCoinList(state, { payload }){
 		    return {

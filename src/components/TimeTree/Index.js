@@ -10,6 +10,9 @@ import router from 'umi/router'
 import Share from './Share'
 
 let currentTime = '';
+
+
+
 const TimeTree = (props) => {
     const { data,onShare } = props;
 
@@ -82,11 +85,15 @@ const TimeTree = (props) => {
                         <div key={item.id} style={{marginTop:'10px'}}>
                             <div>
                                 { week ? <Title title={ week }/> : "" }
-                                <div onClick={()=>router.push('/CoinMessageShare')}>
+                                <div onClick={()=>{
+                                  router.push(`/CoinMessageShare?id=${item.id}`)
+                                }}>
                                   <SecTitle title={formatData(parseInt(item.created_at) * 1000)}/>
                                   <Content title="" content={item.content.length > 100 ? (item.content.substr(0, 100) + '...') : item.content} />
                                 </div>
-                                <Share onShare={onShare}/>
+                                <Share onShare={()=>{
+                                    window.postMessage(JSON.stringify({type: 'share',data:`http://bitss.pro/dist/CoinMessageShare?id=${item.id}`}), '*')
+                                }} id={item.id} {...props} />
                             </div>
                         </div>
                     )

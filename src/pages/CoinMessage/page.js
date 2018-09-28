@@ -30,18 +30,11 @@ class CoinMessage extends PureComponent {
         },
         hasMore: true
     }
-
     componentWillUnmount(){
       //console.log('走掉')
       window.postMessage(JSON.stringify({type: 'leave'}), '*')
     }
-<<<<<<< Updated upstream
-    onShare(){
-      window.postMessage(JSON.stringify({type: 'share'}), '*')
-    }
-=======
 
->>>>>>> Stashed changes
     componentDidMount(){
         const hei = this.state.height - 55;//ReactDOM.findDOMNode(this.ptr).offsetTop;
         window.postMessage(JSON.stringify({type: 'enter'}), '*')
@@ -85,7 +78,7 @@ class CoinMessage extends PureComponent {
 
     // 搜索币讯
     searchCoinList = (keyword) => {
-        console.log(keyword);
+      window.postMessage(JSON.stringify({type: 'search'}), '*')
     }
 
     // 获取币讯列表接口
@@ -181,7 +174,7 @@ class CoinMessage extends PureComponent {
                 >
                     <div ref="content">
                         <div style={{height: '.1rem'}}/>
-                        <TimeTree data={coinList} onShare={this.onShare}/>
+                        <TimeTree data={coinList} {...this.props}/>
                         <div className={style.loadMore} onClick={() => this.loadMoreData()}>{hasMore ? '加载更多' : '没有更多数据了'}加载更多</div>
                     </div>
                 </PullToRefresh>
