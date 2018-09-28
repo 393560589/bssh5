@@ -1,4 +1,5 @@
 import React, { PureComponent } from 'react'
+import { ListView } from 'antd-mobile'
 import style from './Index.less'
 import Title from './Title';
 import SecTitle from './SecTitle';
@@ -12,8 +13,65 @@ let currentTime = '';
 const TimeTree = (props) => {
     const { data,onShare } = props;
 
+    // const data1 = [
+    //     {
+    //       img: 'https://zos.alipayobjects.com/rmsportal/dKbkpPXKfvZzWCM.png',
+    //       title: 'Meet hotel',
+    //       des: '不是所有的兼职汪都需要风吹日晒',
+    //     },
+    //     {
+    //       img: 'https://zos.alipayobjects.com/rmsportal/XmwCzSeJiqpkuMB.png',
+    //       title: 'McDonald\'s invites you',
+    //       des: '不是所有的兼职汪都需要风吹日晒',
+    //     },
+    //     {
+    //       img: 'https://zos.alipayobjects.com/rmsportal/hfVtzEhPzTUewPm.png',
+    //       title: 'Eat the week',
+    //       des: '不是所有的兼职汪都需要风吹日晒',
+    //     },
+    // ];
+
+    // const row = (rowData, sectionID, rowID) => {
+    //     return (
+    //         <div key={rowID} style={{ padding: '0 15px' }}>
+    //                 <div
+    //                     style={{
+    //                         lineHeight: '50px',
+    //                         color: '#888',
+    //                         fontSize: 18,
+    //                         borderBottom: '1px solid #F6F6F6',
+    //                     }} >
+    //                     fuckme
+    //                 </div>
+    //             </div>
+    //     );
+    // };
+
+    // const onEndReached = function(event) {
+    //     // load new data
+    //     // hasMore: from backend data, indicates whether it is the last page, here is false
+    //     if (this.state.isLoading && !this.state.hasMore) {
+    //       return;
+    //     }
+    //     console.log('reach end', event);
+    // }
+
     return(
         <div className={style.time_box}>
+            {/* <ListView
+                ref={el => this.lv = el}
+                dataSource={this.state.dataSource}
+                renderHeader={() => <span>header</span>}
+                renderFooter={() => (<div style={{ padding: 30, textAlign: 'center' }}>
+                                        {this.state.isLoading ? 'Loading...' : 'Loaded'}
+                                    </div>)}
+                renderRow={row}
+                pageSize={4}
+                onScroll={() => { console.log('scroll'); }}
+                scrollRenderAheadDistance={500}
+                onEndReached={this.onEndReached}
+                onEndReachedThreshold={10}
+            /> */}
             {
                 !(currentTime = '') && data && data.map((item, index) => {
                     if(index !== 0) {

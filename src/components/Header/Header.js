@@ -1,12 +1,47 @@
-import React from 'react'
+import React, { PureComponent } from 'react'
 import style from './Header.less'
 
-const Header = () => {
-  	return (
-    	<div className={style.header}>
-			<input className={style.input} type="text" placeholder={'输入关键词'}/>
-    	</div>
-  	);
+class Header extends PureComponent {
+	constructor(props) {
+		super(props);
+
+		this.state = {
+			keyword: '',
+			showSearch: false,
+			showCancel: false,
+		};
+	}
+
+	inputChange = (e) => {
+		const that = this;
+		let value = e.target.value;
+
+		if(value.trim() === '') {
+			that.setState({
+				showSearch: false,
+				keyword: value.trim()
+			});
+		}
+		else {
+			that.setState({
+				showSearch: true,
+				keyword: value.trim()
+			});
+		}
+	}
+
+	render() {
+		const { showSearch, showCancel, keyword } = this.state;
+
+		return (
+			<div className={style.header}>
+				<input className={style.input} type="text" value={ keyword } onChange={this.inputChange} placeholder={'输入关键词'}/>
+				<button onClick={() => this.props.handleSearch(keyword)} className={ showSearch ? `${style.search} ${style.show}` : `${style.search} ${style.hide}` }>搜索</button>
+				<button className={ showCancel ? `${style.cancel} ${style.show}` : `${style.cancel} ${style.hide}` }>取消</button>
+			</div>
+		  );
+	}
+  	
 };
 
 export default Header;

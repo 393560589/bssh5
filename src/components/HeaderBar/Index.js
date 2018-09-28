@@ -3,7 +3,7 @@ import style from './Index.less'
 import Header from './Header'
 import Content from './Content'
 
-const titles = ['', '', '', '人物', '', '钱包', '交易所', '资本', '媒体'];
+const titles = ['', '普通', '项目', '人物', '公司', '钱包', '交易所', '资本', '媒体'];
 
 const HeaderBar = (props) => {
 	const { data } = props;

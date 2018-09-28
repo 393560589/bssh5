@@ -30,13 +30,18 @@ class CoinMessage extends PureComponent {
         },
         hasMore: true
     }
+
     componentWillUnmount(){
       //console.log('走掉')
       window.postMessage(JSON.stringify({type: 'leave'}), '*')
     }
+<<<<<<< Updated upstream
     onShare(){
       window.postMessage(JSON.stringify({type: 'share'}), '*')
     }
+=======
+
+>>>>>>> Stashed changes
     componentDidMount(){
         const hei = this.state.height - 55;//ReactDOM.findDOMNode(this.ptr).offsetTop;
         window.postMessage(JSON.stringify({type: 'enter'}), '*')
@@ -76,6 +81,11 @@ class CoinMessage extends PureComponent {
             return;
         }
         this.getCoinList();
+    }
+
+    // 搜索币讯
+    searchCoinList = (keyword) => {
+        console.log(keyword);
     }
 
     // 获取币讯列表接口
@@ -136,10 +146,11 @@ class CoinMessage extends PureComponent {
     render() {
         const that = this;
         const { coinList, hasMore, panigation } = that.props;
+        console.log('test');
 
         return (
             <div>
-                <Header />
+                <Header handleSearch={this.searchCoinList} />
                 <PullToRefresh
                     damping={60}
                     direction='down'
