@@ -1,9 +1,10 @@
 import React, { PureComponent } from 'react';
 import styles from './index.less';
 import { Icon } from 'antd-mobile';
-import { handleTime } from '../../utils/functions';
+import handleTime from '../../utils/handleTime';
+import { connect } from 'dva';
 
-
+@connect(({ homePage }) => ({ ...homePage }))
 class HomePage extends PureComponent {
 
     constructor (...args) {
@@ -54,6 +55,23 @@ class HomePage extends PureComponent {
         }
     }
 
+    componentDidMount() {
+        const { dispatch, location } = this.props;
+
+        let params = location.query;
+
+        // 获取文章详情和列表
+        dispatch({
+            type: 'homePage/getHomePageUserInfo',
+            payload: params
+        })
+
+        dispatch({
+            type: 'homePage/getHomePageList',
+            payload: params
+        })
+    }
+
     render () {
         const {
             homePage_Background,
@@ -63,19 +81,28 @@ class HomePage extends PureComponent {
             homePage_listData
         } = this.state;
 
+        let {
+            homePageUserInfo,
+            homePageList
+        } = this.props;
+
         // 每个列表模块
-        const list = (v) => {
+        const list = (v, i) => {
             return (
-                <div className={ styles.homePage_list } key={ v.id }>
+                <div className={ styles.homePage_list } key={ i }>
                     <p className={ styles.homePage_list_time }>
-                        {/* <span className={ styles.homePage_list_time_date }>{ handleTime( v.time )[1] }</span>
-                        <span className={ styles.homePage_list_time_month }>{ handleTime( v.time )[0] }</span> */}
+                        <span className={ styles.homePage_list_time_date }>{ handleTime( v.addtime )[1] ? handleTime( v.addtime )[1] : '' }</span>
+                        <span className={ styles.homePage_list_time_month }>{ handleTime( v.addtime )[0] ? handleTime( v.addtime )[0] : ''}</span>
                     </p>
-                    {
+                    {/* {
                         v.list && v.list.length > 0 && v.list.map((k, i) => {
                             return listItem && listItem(k, i, (v.list.length - 1) !== i)
                         })
-                    }
+                    } */}
+                    <div className={ true ? `${styles.homePage_list_detail} ${styles.border_bottom}` : `${styles.homePage_list_detail}` }>
+                        <h6>{ v.smbo_title }</h6>
+                        <p>{ v.post_title }</p>
+                    </div>
                 </div>
             )
         }
@@ -97,20 +124,20 @@ class HomePage extends PureComponent {
                         <Icon className={ styles.homePage_header_title_icon } type="left" color="#FFF"/>
                         <span className={ styles.homePage_header_title_headline }>TA的主页</span>
                     </p>
-                    <p className={ styles.homePage_header_theme }>{ homePage_title }</p>
-                    <img className={ styles.homePage_header_img } src={ homePage_img }/>
+                    <p className={ styles.homePage_header_theme }>{ homePageUserInfo.username }</p>
+                    <img className={ styles.homePage_header_img } src={ homePageUserInfo.headimgurl }/>
                 </div>
-                <p className={ styles.homePage_header_bottom }>
+                <div className={ styles.homePage_header_bottom }>
                     <p className={ styles.homePage_header_bottom_overflow } style={{ webkitBoxOrient: "vertical" }}>
                         <span className={ styles.homePage_header_state }>简介:</span>
                         { headerState }
                     </p>
-                </p>
+                </div>
             </header>
             <main className={ styles.homePage_listWrapper }>
                 {
-                    homePage_listData && homePage_listData.length > 0 && homePage_listData.map(v => {
-                        return list && list(v)
+                    homePageList && homePageList.length > 0 && homePageList.map((v, i) => {
+                        return list && list(v, i)
                     })
                 }
             </main>
@@ -119,3 +146,13 @@ class HomePage extends PureComponent {
 };
 
 export default HomePage;
+
+// city: null
+// headimgurl: "http://www.bitss.pro/static/userHeadImg/1533016942.jpeg"
+// integral: 1188
+// level: 1
+// phone: "13736795421"
+// province: null
+// sex: 1
+// sign: "未签到"
+// username: "鲁鲁皮"
