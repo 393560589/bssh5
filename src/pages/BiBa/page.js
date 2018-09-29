@@ -15,14 +15,8 @@ class BiBa extends PureComponent {
   }
 
   post = () => {
-<<<<<<< Updated upstream
     const { id, smbo_title } = this.props.barInfo
     window.postMessage(JSON.stringify({type: 'post', id, title: smbo_title}), '*')
-=======
-    const { id } = this.props.barInfo
-    console.log(this.props)
-    window.postMessage(JSON.stringify({type: 'post', id}), '*')
->>>>>>> Stashed changes
   }
 
   renderPost = ({id, headimgurl, username, post_title, addtime}) => {
