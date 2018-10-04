@@ -113,7 +113,7 @@ class SearchResult extends PureComponent {
             <p
               ref={v => this.p = v}
               dangerouslySetInnerHTML={{__html: content}}
-              style={{maxHeight: '.6rem'}}
+              style={{maxHeight: '.6rem', lineHeight: '.2rem'}}
               className={styles.hiddenText}
               onClick={() => this.p.style.maxHeight = ''}
             />
@@ -183,7 +183,8 @@ class SearchResult extends PureComponent {
     description = description.replace(key, html);
 
     return (
-      <section key={id} className="p-15 mb-8" onClick={()=>window.location.href = url}>
+      <section key={id} className="p-15 mb-8" onClick={() => {window.location.href=url}}>
+
         <h3 dangerouslySetInnerHTML={{__html:title}} />
         <p className="mb-8" dangerouslySetInnerHTML={{__html:description}}/>
         <a className={styles.link}>查看更多</a>
