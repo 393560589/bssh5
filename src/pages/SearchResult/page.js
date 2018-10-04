@@ -183,10 +183,10 @@ class SearchResult extends PureComponent {
     description = description.replace(key, html);
 
     return (
-      <section key={id} className="p-15 mb-8">
+      <section key={id} className="p-15 mb-8" onClick={()=>window.location.href = url}>
         <h3 dangerouslySetInnerHTML={{__html:title}} />
         <p className="mb-8" dangerouslySetInnerHTML={{__html:description}}/>
-        <a href={url} className={styles.link}>查看更多</a>
+        <a className={styles.link}>查看更多</a>
       </section>
     )
   }

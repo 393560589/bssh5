@@ -20,7 +20,7 @@ class BiBa extends PureComponent {
   }
 
   renderPost = ({id, headimgurl, username, post_title, addtime}) => {
-    console.log(id)
+    //console.log(id)
     return (
       <section className={styles.post} key={id} onClick={() => router.replace(`/BiBaDetail?id=${id}`)}>
         <div className={styles.top}>

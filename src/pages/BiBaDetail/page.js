@@ -26,7 +26,7 @@ class BiBaDetail extends PureComponent {
                             <div className={style.detail_name}>{ bibaDeatil.username }</div>
                             <div className={style.detail_label}>
                                 <span>{ bibaDeatil.smbo_title }</span>
-                                <span className={style.line}></span>
+                                <span className={style.line}/>
                                 <span>{ bibaDeatil.addtime }</span>
                             </div>
                         </div>
@@ -58,7 +58,7 @@ class BiBaDetail extends PureComponent {
                                             </div>
                                         </div>
                                     </div>
-                                    <div className={`${ style.detail_content } mb-8`} dangerouslySetInnerHTML={{  __html: v.content  }}></div>
+                                    <div className={`${ style.detail_content } mb-8`} dangerouslySetInnerHTML={{  __html: v.content  }}/>
                                     <div className={style.detail_imgs}>
                                         {
                                             v.img && v.img.split('**').map((k, t) => {

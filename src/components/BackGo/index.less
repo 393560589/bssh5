@@ -1,0 +1,44 @@
+.header {
+    height: .45rem;
+    display: flex;
+    padding: .06rem .15rem;
+    border-bottom: 1px solid #f8f8f8;
+
+    .input {
+        flex: 1;
+        height: .33rem;
+        padding: 0 .1rem;
+        font-size: .14rem;
+        color: #333;
+        border-radius: .05rem;
+        background-color: #f4f4f4;
+    }
+
+    button {
+        font-size: .15rem;
+        transition: all .1s linear;
+        padding: 0;
+        border: 0;
+        margin: 0;
+        background-color: transparent;
+
+        &.search {
+            color: #F29600;
+        }
+
+        &.cancel {
+            color: #666;
+        }
+
+        &.show {
+            padding: 0 .06rem;
+            width: auto;
+        }
+
+        &.hide {
+            width: 0;
+            font-size: 0;
+        }
+        
+    }
+}
