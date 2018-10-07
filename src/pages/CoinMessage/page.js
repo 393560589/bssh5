@@ -94,7 +94,6 @@ class CoinMessage extends PureComponent {
                     ...panigation
                 },
                 callback: (data) => {
-                    alert(data && data.length);
                     if(data && data.length >= panigation.len) {
                         that.setState({
                             pagination: {
