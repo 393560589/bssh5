@@ -94,12 +94,14 @@ class CoinMessage extends PureComponent {
                     ...panigation
                 },
                 callback: (data) => {
+                    alert(data && data.length);
                     if(data && data.length >= panigation.len) {
                         that.setState({
                             pagination: {
                                 ...panigation,
                                 page: panigation.page++
-                            }
+                            },
+                            hasMore: true
                         });
                     }
                     else {
@@ -124,7 +126,8 @@ class CoinMessage extends PureComponent {
                         pagination: {
                             ...panigation,
                             page: panigation.page++
-                        }
+                        },
+                        hasMore: true
                     });
                 }
                 else {
@@ -138,8 +141,8 @@ class CoinMessage extends PureComponent {
 
     render() {
         const that = this;
-        const { coinList, hasMore, panigation } = that.props;
-        console.log('test');
+        const { coinList, panigation } = that.props;
+        const { hasMore } = that.state;
 
         return (
             <div>
@@ -175,7 +178,7 @@ class CoinMessage extends PureComponent {
                     <div ref="content">
                         <div style={{height: '.1rem'}}/>
                         <TimeTree data={coinList} {...this.props}/>
-                        <div className={style.loadMore} onClick={() => this.loadMoreData()}>{hasMore ? '加载更多' : '没有更多数据了'}加载更多</div>
+                        <div className={style.loadMore} onClick={() => this.loadMoreData()}>{hasMore ? '加载更多' : '没有更多数据了'}</div>
                     </div>
                 </PullToRefresh>
             </div>

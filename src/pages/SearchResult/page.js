@@ -190,12 +190,13 @@ class SearchResult extends PureComponent {
     )
   }
 
+  //this.setState({loading: true}, function() {window.location.href=n.url})}}
   renderNews = () => {
     const { news } = this.state
     return (
       <section className="p-15 mb-8">
         <h3>近期关于<b className={'_high'}>{this.state.keyword}</b>的相关新闻</h3>
-        {news && news.map(n => <p className={styles.newsLink} key={n.title} onClick={(e) => { e.preventDefault();this.setState({loading: true}, function() {window.location.href=n.url})}}><a href={n.url}>{n.title}</a></p>)}
+        {news && news.map(n => <p className={styles.newsLink} key={n.title} onClick={(e) => {e.preventDefault(); window.postMessage(JSON.stringify({type: 'WebViews', url: n.url}), '*') }}><a href={n.url}>{n.title}</a></p>)}
       </section>
     )
   }

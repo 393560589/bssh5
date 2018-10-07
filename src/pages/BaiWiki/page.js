@@ -23,6 +23,7 @@ class BaiWiki extends PureComponent {
                 id
             }
         })
+
     }
 
     // getTitle = (type) => {
