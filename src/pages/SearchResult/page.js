@@ -48,6 +48,11 @@ class SearchResult extends PureComponent {
     window.postMessage(JSON.stringify({type: 'enter'}), '*')
   }
 
+  componentDidUpdate() {
+    let {location: { query: { keyword } }} = router;
+    window.postMessage(JSON.stringify({type: 'search', keyword}), '*')
+  }
+
   componentWillUnmount() {
     window.postMessage(JSON.stringify({type: 'leave'}), '*')
   }
