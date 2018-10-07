@@ -148,7 +148,7 @@ class HomePage extends PureComponent {
 export default HomePage;
 
 // city: null
-// headimgurl: "http://www.bitss.pro/static/userHeadImg/1533016942.jpeg"
+// headimgurl: "//www.bitss.pro/static/userHeadImg/1533016942.jpeg"
 // integral: 1188
 // level: 1
 // phone: "13736795421"

@@ -22,8 +22,16 @@ class BiBaDetail extends PureComponent {
         const { location } = this.props;
         let params = location.query;
 
+        let phone = params.phone;
+        if (phone === 'undefined' || phone === undefined || phone === '') {
+            phone = localStorage.getItem('bss_user_phone');
+        } else {
+            localStorage.setItem('bss_user_phone', phone);
+        }
+
         this.setState({
-            id: params.id
+            id: params.id,
+            phone
         });
     }
 
@@ -34,11 +42,20 @@ class BiBaDetail extends PureComponent {
      * @pid 二级id
      */ 
     handleSaySome = (type, pid, index) => {
+        const that = this;
+
+        if(!this.state.phone) {
+            window.postMessage(JSON.stringify({type: 'login', id: this.state.id}), '*');
+            return;
+        }
+
         this.setState({
             type,
             pid,
             index,
             showComment: true
+        }, () => {
+            that.TextareaItemRefs.focus()
         });
     }
 
@@ -53,7 +70,29 @@ class BiBaDetail extends PureComponent {
                 payload: {
                     article_id: id,
                     content,
-                    user_phone: '15257741312'
+                    user_phone: phone
+                },
+                callback: (data) => {
+                    const { bibaDeatilOneBack, bibaDeatil } = this.props;
+                    this.setState({
+                        content: '',
+                        showComment: false
+                    });
+                    if(bibaDeatilOneBack) {
+                        bibaDeatilOneBack.unshift({
+                            username: bibaDeatil && bibaDeatil.username || '无',
+                            content,
+                            addtime: parseInt((+new Date())/1000),
+                            headimgurl: bibaDeatil && bibaDeatil.headimgurl || '',
+                            id: data.id,
+                            res2: []
+                        })
+
+                        dispatch({
+                            type: 'bibaDeatil/updateComment',
+                            payload: bibaDeatilOneBack
+                        });
+                    }
                 }
             });
         }
@@ -64,13 +103,17 @@ class BiBaDetail extends PureComponent {
                     article_id: id,
                     pid,
                     content,
-                    user_phone: '15257741312'
+                    user_phone: phone
                 },
                 callback: () => {
                     const { bibaDeatilOneBack, bibaDeatil } = this.props;
+                    this.setState({
+                        content: '',
+                        showComment: false
+                    });
                     if(bibaDeatilOneBack) {
                         if(bibaDeatilOneBack[index] && bibaDeatilOneBack[index].res2) {
-                            bibaDeatilOneBack[index].res2.push({
+                            bibaDeatilOneBack[index].res2.unshift({
                                 username: bibaDeatil && bibaDeatil.username || '无',
                                 content,
                             })
@@ -92,21 +135,13 @@ class BiBaDetail extends PureComponent {
             bibaDeatilOneBack,
             location
         } = this.props;
-
-        let params = location.query;
-        let phone;
-        if (this.props.phone) {
-            phone = this.props.phone;
-        } else {
-            phone = params.phone;
-            this.props.dispatch({type: 'index/save', payload: {phone}})
-        }
+        const { phone } = this.state;
 
         return (
             <div className='mh-100 bg-f5'>
                 <div className={style.detail_box}>
                     <div className={style.detail_info_box}>
-                        <img src={ 'http://www.bitss.pro/static/userHeadImg/' + bibaDeatil.headimgurl } alt="sb" title="sb" />
+                        <img src={ '//www.bitss.pro/static/userHeadImg/' + bibaDeatil.headimgurl } alt="sb" title="sb" />
                         <div className={style.detail_info}>
                             <div className={style.detail_name}>{ bibaDeatil.username }</div>
                             <div className={style.detail_label}>
@@ -133,7 +168,7 @@ class BiBaDetail extends PureComponent {
                             return (
                                 <div className={style.detail_box} key={ v.id }>
                                     <div className={style.detail_info_box}>
-                                        <img className={style.br_17} src={ 'http://www.bitss.pro/static/userHeadImg/' + v.headimgurl } alt="" />
+                                        <img className={style.br_17} src={ '//www.bitss.pro/static/userHeadImg/' + v.headimgurl } alt="" />
                                         <div className={style.detail_info}>
                                             <div className={`${style.detail_name} mb-8`}>{ v.username }</div>
                                             <div className={style.detail_label}>
@@ -197,6 +232,7 @@ class BiBaDetail extends PureComponent {
                                 <div className={style.ok} onClick={ () => this.postData() }>发布</div>
                             </div>
                             <TextareaItem
+                                ref={ (el) => { this.TextareaItemRefs = el } }
                                 placeholder="说点什么吧。。。"
                                 labelNumber={5}
                                 rows={4}

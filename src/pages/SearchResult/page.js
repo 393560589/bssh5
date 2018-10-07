@@ -28,17 +28,29 @@ class SearchResult extends PureComponent {
 
   componentDidMount() {
     let {location: { query: { keyword, phone } }} = router;
-    // let _phone;
-    if (this.props.phone) {
-      phone = this.props.phone
+    // let phone = query.phone;
+    console.log(phone);
+    if (phone === 'undefined' || phone === '' || phone === undefined) {
+      if (window.history.length === 1) {
+        console.log('length = 1');
+        localStorage.setItem('bss_user_phone', phone);
+      } else {
+        phone = localStorage.getItem('bss_user_phone');
+      }
     } else {
-      this.props.dispatch({type: 'index/save', payload: {phone}})
+      console.log('set phone')
+      localStorage.setItem('bss_user_phone', phone);
     }
 
     this.setState({keyword, phone})
     this.fetchResult(keyword)
     this.fetchFlowResult(keyword)
     window.postMessage(JSON.stringify({type: 'enter'}), '*')
+  }
+
+  componentDidUpdate() {
+    let {location: { query: { keyword } }} = router;
+    window.postMessage(JSON.stringify({type: 'search', keyword}), '*')
   }
 
   componentWillUnmount() {
@@ -108,10 +120,10 @@ class SearchResult extends PureComponent {
       <section className="p-15">
         <section className={styles.top}>
           <span>1{currency}=</span>
-          <p style={{fontSize: '.24rem'}}>{price}USD</p>
+          <p style={{fontSize: '.24rem'}}>{price}RMB</p>
         </section>
         <section className={styles.top}>
-          <h4 style={{fontSize: '.12rem', marginBottom: '.2rem'}}>{change}</h4>
+          <h4 style={{fontSize: '.12rem', marginBottom: '.2rem'}}>{change}USD</h4>
           <span style={{fontSize: '.15rem'}}>市值:${marketCap}<br/>全球交易量(24h):${vol}</span>
         </section>
       </section>
@@ -124,7 +136,7 @@ class SearchResult extends PureComponent {
       <section className="p-15 mb-8" onClick={() => router.push(`/BaiWiKi?id=${id}`)}>
         <h3>{title}</h3>
           <div className="ds-fs">
-            <img src={img} alt="" className={styles.image}/>
+            <img src={`//www.bitss.pro/static${img}`} alt="头像" className={styles.image}/>
             <p
               ref={v => this.p = v}
               dangerouslySetInnerHTML={{__html: content}}
@@ -144,7 +156,7 @@ class SearchResult extends PureComponent {
       <section className="p-15 mb-8" onClick={() => router.push({pathname: '/BiBa', query: {id, phone}})}>
         <h3>{title}</h3>
         <div className="ds-fs mb-8">
-          <img src={logo} alt="" className={styles.image}/>
+          <img src={`/static/baupload/${logo}`} alt="" className={styles.image}/>
           <div>
             {post && post.map(p => <p key={p.id}>{p.post_title}</p>)}
           </div>
@@ -172,22 +184,24 @@ class SearchResult extends PureComponent {
   }
 
   renderPost = () => {
+    const { phone } = this.state;
     return (
       <section className="p-15 mb-8">
         <h3>关于<b className={'_high'}>{this.state.keyword}</b>的帖子</h3>
-        {this.state.post && this.state.post.map(p => <p className="mb-8" key={p.id}>{`${p.post_title}[${p.board_title}]`}</p>)}
+        {this.state.post && this.state.post.map(p => <p className={styles.newsLink} key={p.id} onClick={() => {router.push(`/BiBaDetail?id=${p.id}&phone=${phone}`)}}>{`${p.post_title}[${p.board_title}]`}</p>)}
         {/* <p className="mb-8">7月31日BTC、EOS交易策略【比特币吧</p>
         <p>爆炒区块链3.0概念，EOS想超ETH (以太坊)，没那么简单!【以太坊吧】</p> */}
       </section>
     )
   }
 
+  //this.setState({loading: true}, function() {window.location.href=n.url})}}
   renderNews = () => {
     const { news } = this.state
     return (
       <section className="p-15 mb-8">
         <h3>近期关于<b className={'_high'}>{this.state.keyword}</b>的相关新闻</h3>
-        {news && news.map(n => <p className="mb-8" key={n.title} onClick={() => { this.setState({loading: true}, function() {window.location.href=n.url})}}><a href="#">{n.title}</a></p>)}
+        {news && news.map(n => <p className={styles.newsLink} key={n.title} onClick={(e) => {e.preventDefault(); window.postMessage(JSON.stringify({type: 'WebViews', url: n.url}), '*') }}><a href={n.url}>{n.title}</a></p>)}
       </section>
     )
   }
@@ -197,9 +211,9 @@ class SearchResult extends PureComponent {
     let key = new RegExp(this.state.keyword,'igm')
     title = title.replace(key, html);
     description = description.replace(key, html);
-
+    //this.setState({loading: true}, function() {window.location.href=url});
     return (
-      <section key={id} className="p-15 mb-8" onClick={() => {this.setState({loading: true}, function() {window.location.href=url});}}>
+      <section key={id} className="p-15 mb-8" onClick={() => { window.postMessage(JSON.stringify({type: 'WebViews', url}), '*') }}>
         <h3 dangerouslySetInnerHTML={{__html:title}} />
         <p className="mb-8" dangerouslySetInnerHTML={{__html:description}}/>
         <a className={styles.link}>查看更多</a>
@@ -230,7 +244,7 @@ class SearchResult extends PureComponent {
     return (
       <section className="mt-8 ds-f p-8">
         <img src={require('../../assets/arrow-left.png')} alt="" className={styles.icon} onClick={this.goPrev}/>
-        <span className={styles.page}>第 {this.state.flowPage} 页</span>
+        <span className={styles.page}>第 {this.state.flowPage} / {Math.ceil(this.state.totalPage / 7)} 页</span>
         <img src={require('../../assets/arrow-right.png')} alt="" className={styles.icon} onClick={this.goNext}/>
       </section>
     )
@@ -241,7 +255,7 @@ class SearchResult extends PureComponent {
   }
 
   render() {
-    const { baike, ba, app, post, news, others } = this.state
+    const { baike, ba, app, post, news, others, flowPage } = this.state
     return (
       <div>
       { this.state.error
@@ -250,12 +264,12 @@ class SearchResult extends PureComponent {
             <p>未找到{`"${router.location.query.keyword}"`}相关结果</p>
         </div>)
         : (<div className={styles.container}>
-          {this.renderPrice()}
-          {baike && this.renderBaiWiki()}
-          {ba && this.renderBa()}
-          {app && this.renderApp()}
-          {post && post.length && this.renderPost()}
-          {news && news.length && this.renderNews()}
+          {flowPage === 1 && this.renderPrice()}
+          {flowPage === 1 && baike && this.renderBaiWiki()}
+          {flowPage === 1 && ba && this.renderBa()}
+          {flowPage === 1 && app && this.renderApp()}
+          {flowPage === 1 && post && post.length > 0 && this.renderPost()}
+          {flowPage === 1 && news && news.length > 0 && this.renderNews()}
           {others.map(item => this.renderOther(item))}
           {this.renderHots()}
           {this.renderPagination()}

@@ -1,5 +1,4 @@
 import * as server from '../services/bibaDetail';
-import { PathPlugin } from 'awesome-typescript-loader/dist/paths-plugin';
 export default {
 
     namespace: 'bibaDeatil',
@@ -15,11 +14,11 @@ export default {
           return history.listen(({pathname, query}) => {
             if (pathname === '/BiBaDetail') {
                 dispatch({type: 'getBiBaDetail', payload: query})
-                dispatch({type: 'getBiBaDetailOneBack', payload: { id: 49 }})
+                dispatch({type: 'getBiBaDetailOneBack', payload: { id: query.id }})
 
-                if(!query.phone) {
-                    window.postMessage(JSON.stringify({type: 'login', id: query.id}), '*');
-                }
+                // if(!query.phone) {
+                //     window.postMessage(JSON.stringify({type: 'login', id: query.id}), '*');
+                // }
             }
           })
         },
@@ -48,7 +47,7 @@ export default {
         *postOne({payload, callback}, { call, put }) {
             const res = yield call(server.postOne, payload)
             if(res.data && res.data.status === 200) {
-				callback();
+				callback(res.data);
 			}
         },
         *postTwo({payload, callback}, { call, put }) {

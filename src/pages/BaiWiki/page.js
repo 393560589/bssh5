@@ -1,6 +1,7 @@
 import React, { PureComponent } from 'react'
 import { connect } from 'dva'
 import { HeaderBar, Expand, GradBox, GradList, CommentList } from 'components'
+import { ActivityIndicator } from 'antd-mobile'
 import style from './index.less'
 import router from 'umi/router'
 
@@ -12,6 +13,13 @@ const titles = ['', '普通', '项目介绍', '人物介绍', '公司介绍', '�
 
 @connect(({wiki})=>({...wiki}))
 class BaiWiki extends PureComponent {
+    constructor(props) {
+        super(props);
+
+        this.state = {
+            loading: false
+        };
+    }
 
     componentDidMount() {
         const {location: { query: {id} }} = router
@@ -23,40 +31,14 @@ class BaiWiki extends PureComponent {
                 id
             }
         })
+
     }
 
-    // getTitle = (type) => {
-    //     let title = '';
-
-    //     switch(type){
-    //         case 1:
-    //             title = '';
-    //             break;
-    //         case 2:
-    //             title = '';
-    //             break;
-    //         case 3:
-    //             title = '';
-    //             break;
-    //         case 4:
-    //             title = '';
-    //             break;
-    //         case 5:
-    //             title = '';
-    //             break;
-    //         case 6:
-    //             title = '';
-    //             break;
-    //         case 7:
-    //             title = '';
-    //             break;
-    //         case 8:
-    //             title = '';
-    //             break;
-    //         default:
-    //             title = '';
-    //     }
-    // }
+    handleClick = () => {
+        this.setState({
+            loading: true
+        });
+    }
 
     render() {
         const { baiWikiDetail } = this.props;
@@ -98,9 +80,15 @@ class BaiWiki extends PureComponent {
                 <div className="mt-8 bg-ff">
                     <div className={style.title}>相关新闻</div>
                     <div className={style.scroll_box}>
-                        <CommentList data={baiWikiDetail.news} />
+                        <CommentList data={baiWikiDetail.news} handleClick={ this.handleClick } />
                     </div>
                 </div>
+
+                <ActivityIndicator
+                    toast
+                    text="加载中..."
+                    animating={this.state.loading}
+                />
             </div>
         );
     }

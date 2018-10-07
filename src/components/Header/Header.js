@@ -35,7 +35,7 @@ class Header extends PureComponent {
 
 		return (
 			<div className={style.header} onClick={() => this.props.handleSearch()}>
-				<input className={style.input} disabled={true} type="text" value={ keyword } onChange={this.inputChange} placeholder={'输入关键词'}/>
+				<input className={style.input} disabled={true} type="text" value={ keyword } onChange={this.inputChange} placeholder={'搜资讯、交易所、项目、币种'}/>
 				<button className={ showSearch ? `${style.search} ${style.show}` : `${style.search} ${style.hide}` }>搜索</button>
 				<button className={ showCancel ? `${style.cancel} ${style.show}` : `${style.cancel} ${style.hide}` }>取消</button>
 			</div>
