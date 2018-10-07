@@ -20,9 +20,10 @@ class BiBa extends PureComponent {
   }
 
   renderPost = ({id, headimgurl, username, post_title, addtime}) => {
+    const { location: { query } } = router;
     //console.log(id)
     return (
-      <section className={styles.post} key={id} onClick={() => router.replace(`/BiBaDetail?id=${id}`)}>
+      <section className={styles.post} key={id} onClick={() => router.replace(`/BiBaDetail?id=${id}&phone=${query.phone}`)}>
         <div className={styles.top}>
           <img src={headimgurl} alt=""/>
           <div>

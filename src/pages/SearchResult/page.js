@@ -17,13 +17,14 @@ class SearchResult extends PureComponent {
       error: false,
       flowPage: 1,
       keyword: '',
+      phone: '',
       totalPage: ''
     }
   }
 
   componentDidMount() {
-    const {location: { query: { keyword } }} = router
-    this.setState({keyword})
+    const {location: { query: { keyword, phone } }} = router
+    this.setState({keyword, phone})
     this.fetchResult(keyword)
     this.fetchFlowResult(keyword)
     window.postMessage(JSON.stringify({type: 'enter'}), '*')
@@ -81,8 +82,9 @@ class SearchResult extends PureComponent {
   }
 
   search = (keyword) => {
+    const { phone } = this.state;
     this.setState({keyword, flowPage: 1})
-    router.push(`/SearchResult?keyword=${keyword}`)
+    router.push(`/SearchResult?keyword=${keyword}&phone=${phone}`)
     this.fetchResult(keyword)
     this.fetchFlowResult(keyword)
     window.scroll(0, 0)
@@ -126,8 +128,9 @@ class SearchResult extends PureComponent {
 
   renderBa = () => {
     const {smbo_title: title, smbo_logo: logo, smbo_description: desc, post, id} = this.state.ba
+    const { phone } = this.state;
     return (
-      <section className="p-15 mb-8" onClick={() => router.push({pathname: '/BiBa', query: {id}})}>
+      <section className="p-15 mb-8" onClick={() => router.push({pathname: '/BiBa', query: {id, phone}})}>
         <h3>{title}</h3>
         <div className="ds-fs mb-8">
           <img src={logo} alt="" className={styles.image}/>
