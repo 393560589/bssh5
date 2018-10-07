@@ -92,7 +92,7 @@ const TimeTree = (props) => {
                                   <Content title="" content={item.content.length > 100 ? (item.content.substr(0, 100) + '...') : item.content} />
                                 </div>
                                 <Share onShare={()=>{
-                                    window.postMessage(JSON.stringify({type: 'share',data:`http://bitss.pro/dist/CoinMessageShare?id=${item.id}`}), '*')
+                                    window.postMessage(JSON.stringify({type: 'share',data:`//bitss.pro/dist/CoinMessageShare?id=${item.id}`}), '*')
                                 }} id={item.id} {...props} />
                             </div>
                         </div>

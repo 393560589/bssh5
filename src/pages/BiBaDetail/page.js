@@ -136,7 +136,7 @@ class BiBaDetail extends PureComponent {
             <div className='mh-100 bg-f5'>
                 <div className={style.detail_box}>
                     <div className={style.detail_info_box}>
-                        <img src={ 'http://www.bitss.pro/static/userHeadImg/' + bibaDeatil.headimgurl } alt="sb" title="sb" />
+                        <img src={ '//www.bitss.pro/static/userHeadImg/' + bibaDeatil.headimgurl } alt="sb" title="sb" />
                         <div className={style.detail_info}>
                             <div className={style.detail_name}>{ bibaDeatil.username }</div>
                             <div className={style.detail_label}>
@@ -163,7 +163,7 @@ class BiBaDetail extends PureComponent {
                             return (
                                 <div className={style.detail_box} key={ v.id }>
                                     <div className={style.detail_info_box}>
-                                        <img className={style.br_17} src={ 'http://www.bitss.pro/static/userHeadImg/' + v.headimgurl } alt="" />
+                                        <img className={style.br_17} src={ '//www.bitss.pro/static/userHeadImg/' + v.headimgurl } alt="" />
                                         <div className={style.detail_info}>
                                             <div className={`${style.detail_name} mb-8`}>{ v.username }</div>
                                             <div className={style.detail_label}>
