@@ -244,7 +244,7 @@ class SearchResult extends PureComponent {
     return (
       <section className="mt-8 ds-f p-8">
         <img src={require('../../assets/arrow-left.png')} alt="" className={styles.icon} onClick={this.goPrev}/>
-        <span className={styles.page}>第 {this.state.flowPage} 页</span>
+        <span className={styles.page}>第 {this.state.flowPage} / {Math.ceil(this.state.totalPage / 7)} 页</span>
         <img src={require('../../assets/arrow-right.png')} alt="" className={styles.icon} onClick={this.goNext}/>
       </section>
     )
