@@ -2,32 +2,33 @@ import React, { PureComponent } from 'react'
 import { connect } from 'dva'
 import style from './index.less'
 import { CommentInput } from 'components'
-import { formate } from '../../utils/date.js';
+import formate from '../../utils/date.js'
+import { TextareaItem } from 'antd-mobile'
 
 @connect(({bibaDeatil})=>({...bibaDeatil}))
 class BiBaDetail extends PureComponent {
-
-    constructor(props) {
-        super(props)
-    }
+    
 
     render() {
         let {
             bibaDeatil,
-            bibaDeatilOneBack
+            bibaDeatilOneBack,
+            location
         } = this.props;
+
+        let params = location.query;
 
         return (
             <div className='mh-100 bg-f5'>
                 <div className={style.detail_box}>
                     <div className={style.detail_info_box}>
-                        <img src={ bibaDeatil.headimgurl } alt="sb" title="sb" />
+                        <img src={ 'http://www.bitss.pro/static/userHeadImg/' + bibaDeatil.headimgurl } alt="sb" title="sb" />
                         <div className={style.detail_info}>
                             <div className={style.detail_name}>{ bibaDeatil.username }</div>
                             <div className={style.detail_label}>
                                 <span>{ bibaDeatil.smbo_title }</span>
                                 <span className={style.line}/>
-                                <span>{ bibaDeatil.addtime }</span>
+                                <span>{ formate(parseFloat(bibaDeatil.addtime)) }</span>
                             </div>
                         </div>
                     </div>
@@ -48,13 +49,13 @@ class BiBaDetail extends PureComponent {
                             return (
                                 <div className={style.detail_box} key={ v.id }>
                                     <div className={style.detail_info_box}>
-                                        <img className={style.br_17} src={ v.headimgurl } alt="" />
+                                        <img className={style.br_17} src={ 'http://www.bitss.pro/static/userHeadImg/' + v.headimgurl } alt="" />
                                         <div className={style.detail_info}>
                                             <div className={`${style.detail_name} mb-8`}>{ v.username }</div>
                                             <div className={style.detail_label}>
                                                 {/* <span>以太坊吧</span> */}
                                                 {/* <span className={style.line}></span> */}
-                                                <span>{ formate(parseFloat(v.addtime+'000')) }</span>
+                                                <span>{ formate(parseFloat(v.addtime)) }</span>
                                             </div>
                                         </div>
                                     </div>
@@ -82,7 +83,7 @@ class BiBaDetail extends PureComponent {
                                                     }
                                                 </div>
                                                 <div className={style.comment_btns}>
-                                                    <button>回复</button>
+                                                    <button onClick={ () => { alert(JSON.stringify(params)) }}>回复</button>
                                                 </div>
                                             </React.Fragment>
                                             : null
@@ -95,6 +96,18 @@ class BiBaDetail extends PureComponent {
 
                 <div className="mt-8 bg-ff">
                     <CommentInput />
+                </div>
+
+                <div className={`${ style.comment_input_box } bg-ff`}>
+                    <div className={style.comment_title}>
+                        <div className={style.cancel}>取消</div>
+                        <div className={style.ok}>发布</div>
+                    </div>
+                    <TextareaItem
+                        placeholder="说点什么吧。。。"
+                        labelNumber={5}
+                        rows={4}
+                    />
                 </div>
             </div>
         )

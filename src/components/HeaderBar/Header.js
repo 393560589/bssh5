@@ -9,7 +9,7 @@ const Header = (props) => {
     	<div className={style.header}>
             <div className={style.header_left}>
                 <div className={style.header_left_icon}>
-                    <Icon type="left" color="#fff" />
+                    {/* <Icon type="left" color="#fff" /> */}
                 </div>
             </div>
             <div className={style.header_center}>{ title }</div>

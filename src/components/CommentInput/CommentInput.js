@@ -15,16 +15,17 @@ class CommentInput extends React.Component {
 		} = this.state;
 		return (
 			<div className={style.comment_input}>
-				<TextareaItem
-					ref={ (el) => { this.TextareaItemRefs = el } }
+				{/* <TextareaItem
+					// ref={ (el) => { this.TextareaItemRefs = el } }
 					rows={ textareaRows }
 					className={style.comment_write}
-					autoHeight={ true }
-					placeholder='写评论...'
-					onFocus={ this.TextareaFocus }
-					onBlur={ this.TextareaBlur }
-				/>
+					// autoHeight={ true }
+					// placeholder='写评论...'
+					// onFocus={ this.TextareaFocus }
+					// onBlur={ this.TextareaBlur }
+				/> */}
 				{/* <input className={style.comment_write} type='text' placeholder='写评论...' /> */}
+				<div className={style.comment_write}>写评论...</div>
 			</div>
 		);
 	}
