@@ -131,7 +131,7 @@ class SearchResult extends PureComponent {
       <section className="p-15 mb-8" onClick={() => router.push(`/BaiWiKi?id=${id}`)}>
         <h3>{title}</h3>
           <div className="ds-fs">
-            <img src={`http://www.bitss.pro/static${img}`} alt="头像" className={styles.image}/>
+            <img src={`//www.bitss.pro/static${img}`} alt="头像" className={styles.image}/>
             <p
               ref={v => this.p = v}
               dangerouslySetInnerHTML={{__html: content}}

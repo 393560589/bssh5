@@ -9,7 +9,7 @@ const Header = (props) => {
 
   	return (
     	<div className={style.content}>
-            <img src={'http://www.bitss.pro/static/' + (data.article_img)} alt="头像"/>
+            <img src={'//www.bitss.pro/static/' + (data.article_img)} alt="头像"/>
             <div className={style.content_title}>{data && data.article_title}</div>
             {/* <div className={style.content_con} dangerouslySetInnerHTML={{__html: (data && data.article_description)}}>
 	    	</div> */}
