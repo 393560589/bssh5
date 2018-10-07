@@ -151,7 +151,7 @@ class SearchResult extends PureComponent {
       <section className="p-15 mb-8" onClick={() => router.push({pathname: '/BiBa', query: {id, phone}})}>
         <h3>{title}</h3>
         <div className="ds-fs mb-8">
-          <img src={logo} alt="" className={styles.image}/>
+          <img src={`/static/baupload/${logo}`} alt="" className={styles.image}/>
           <div>
             {post && post.map(p => <p key={p.id}>{p.post_title}</p>)}
           </div>
