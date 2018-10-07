@@ -2,7 +2,9 @@ import React, { PureComponent } from 'react'
 import styles from './index.less'
 import {resultFix, resultFlow} from '../../services/search'
 import router from 'umi/router'
+import { connect } from 'dva';
 
+@connect(({index}) => ({...index}))
 class SearchResult extends PureComponent {
   constructor() {
     super()
@@ -23,7 +25,14 @@ class SearchResult extends PureComponent {
   }
 
   componentDidMount() {
-    const {location: { query: { keyword, phone } }} = router
+    let {location: { query: { keyword, phone } }} = router;
+    // let _phone;
+    if (this.props.phone) {
+      phone = this.props.phone
+    } else {
+      this.props.dispatch({type: 'index/save', payload: {phone}})
+    }
+
     this.setState({keyword, phone})
     this.fetchResult(keyword)
     this.fetchFlowResult(keyword)

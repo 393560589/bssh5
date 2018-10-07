@@ -5,7 +5,7 @@ import { connect } from 'dva';
 import formate from '../../utils/date';
 
 
-@connect(({biba, loading}) => ({...biba, loading}))
+@connect(({biba, loading, index}) => ({...biba, loading, ...index}))
 class BiBa extends PureComponent {
   componentDidMount() {
     const { dispatch } = this.props
@@ -21,9 +21,17 @@ class BiBa extends PureComponent {
 
   renderPost = ({id, headimgurl, username, post_title, addtime}) => {
     const { location: { query } } = router;
-    //console.log(id)
+    let phone;
+    // let _phone;
+    if (this.props.phone) {
+      phone = this.props.phone
+    } else {
+      phone = query.phone;
+      this.props.dispatch({type: 'index/save', payload: {phone}})
+    }
+
     return (
-      <section className={styles.post} key={id} onClick={() => router.replace(`/BiBaDetail?id=${id}&phone=${query.phone}`)}>
+      <section className={styles.post} key={id} onClick={() => router.replace(`/BiBaDetail?id=${id}&phone=${phone}`)}>
         <div className={styles.top}>
           <img src={headimgurl} alt=""/>
           <div>

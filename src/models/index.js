@@ -3,7 +3,9 @@ export default {
 
   namespace: 'index',
 
-  state: {},
+  state: {
+    phone: ''
+  },
 
   subscriptions: {
     setup({ dispatch, history }) {
