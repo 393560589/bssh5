@@ -66,7 +66,7 @@ class CoinMessageShare extends PureComponent {
                   <img src={require('../../assets/coin/banner.png')} alt="" />
                   <div className={style.share_detail}>
                     {/* <div className={style.share_detail_title}>{ coinDetail. }</div> */}
-                    <div className={ style.share_detail_time}>{ coinDetail && formatData(parseFloat(coinDetail.created_at)) }</div>
+                    <div className={ style.share_detail_time}>{ coinDetail && formatData(parseFloat(coinDetail.created_at+'000')) }</div>
                     <div className={style.share_detail_content}>{ coinDetail && coinDetail.content }</div>
                   </div>
                 </div>

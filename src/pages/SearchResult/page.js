@@ -184,7 +184,6 @@ class SearchResult extends PureComponent {
 
     return (
       <section key={id} className="p-15 mb-8" onClick={() => {window.location.href=url}}>
-
         <h3 dangerouslySetInnerHTML={{__html:title}} />
         <p className="mb-8" dangerouslySetInnerHTML={{__html:description}}/>
         <a className={styles.link}>查看更多</a>

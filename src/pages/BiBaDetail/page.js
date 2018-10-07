@@ -54,7 +54,7 @@ class BiBaDetail extends PureComponent {
                                             <div className={style.detail_label}>
                                                 {/* <span>以太坊吧</span> */}
                                                 {/* <span className={style.line}></span> */}
-                                                <span>{ formate(v.addtime) }</span>
+                                                <span>{ formate(parseFloat(v.addtime+'000')) }</span>
                                             </div>
                                         </div>
                                     </div>
