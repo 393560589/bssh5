@@ -7,11 +7,24 @@ import formate from '../../utils/date';
 
 @connect(({biba, loading, index}) => ({...biba, loading, ...index}))
 class BiBa extends PureComponent {
+  state={
+    phone: ''
+  }
   componentDidMount() {
     const { dispatch } = this.props
     const { location: { query } } = router
     dispatch({type: 'biba/fetchList', payload: query})
     dispatch({type: 'biba/fetchBarInfo', payload: query})
+
+    // const { location: { query } } = router;
+    let phone = query.phone;
+    if (phone === 'undefined' || phone === undefined || phone === '') {
+      phone = localStorage.getItem('bss_user_phone');
+    } else {
+      localStorage.setItem('bss_user_phone', phone);
+    }
+
+    this.setState({phone})
   }
 
   post = () => {
@@ -20,18 +33,9 @@ class BiBa extends PureComponent {
   }
 
   renderPost = ({id, headimgurl, username, post_title, addtime}) => {
-    const { location: { query } } = router;
-    let phone;
-    // let _phone;
-    if (this.props.phone) {
-      phone = this.props.phone
-    } else {
-      phone = query.phone;
-      this.props.dispatch({type: 'index/save', payload: {phone}})
-    }
-
+    const {phone} = this.state;
     return (
-      <section className={styles.post} key={id} onClick={() => router.replace(`/BiBaDetail?id=${id}&phone=${phone}`)}>
+      <section className={styles.post} key={id} onClick={() => router.push(`/BiBaDetail?id=${id}&phone=${phone}`)}>
         <div className={styles.top}>
           <img src={headimgurl} alt=""/>
           <div>

@@ -17,12 +17,11 @@ class BiBaDetail extends PureComponent {
         } = this.props;
 
         let params = location.query;
-        let phone;
-        if (this.props.phone) {
-            phone = this.props.phone;
+        let phone = params.phone;
+        if (phone === 'undefined' || phone === undefined || phone === '') {
+            phone = localStorage.getItem('bss_user_phone');
         } else {
-            phone = params.phone;
-            this.props.dispatch({type: 'index/save', payload: {phone}})
+            localStorage.setItem('bss_user_phone', phone);
         }
 
         return (
@@ -90,7 +89,7 @@ class BiBaDetail extends PureComponent {
                                                     }
                                                 </div>
                                                 <div className={style.comment_btns}>
-                                                    <button onClick={ () => { alert(JSON.stringify(params)) }}>回复</button>
+                                                    <button onClick={ () => { alert(JSON.stringify(phone)) }}>回复</button>
                                                 </div>
                                             </React.Fragment>
                                             : null
