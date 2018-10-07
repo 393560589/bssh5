@@ -179,10 +179,11 @@ class SearchResult extends PureComponent {
   }
 
   renderPost = () => {
+    const { phone } = this.state;
     return (
       <section className="p-15 mb-8">
         <h3>关于<b className={'_high'}>{this.state.keyword}</b>的帖子</h3>
-        {this.state.post && this.state.post.map(p => <p className="mb-8" key={p.id}>{`${p.post_title}[${p.board_title}]`}</p>)}
+        {this.state.post && this.state.post.map(p => <p className={styles.newsLink} key={p.id} onClick={() => {router.push(`/BiBaDetail?id=${p.id}&phone=${phone}`)}}>{`${p.post_title}[${p.board_title}]`}</p>)}
         {/* <p className="mb-8">7月31日BTC、EOS交易策略【比特币吧</p>
         <p>爆炒区块链3.0概念，EOS想超ETH (以太坊)，没那么简单!【以太坊吧】</p> */}
       </section>
