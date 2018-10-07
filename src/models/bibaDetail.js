@@ -13,7 +13,6 @@ export default {
         setup({ dispatch, history }) {
           return history.listen(({pathname, query}) => {
             if (pathname === '/BiBaDetail') {
-                alert(JSON.stringify(query));
                 dispatch({type: 'getBiBaDetail', payload: query})
                 dispatch({type: 'getBiBaDetailOneBack', payload: { id: 49 }})
 

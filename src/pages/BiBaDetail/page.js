@@ -7,7 +7,13 @@ import { TextareaItem } from 'antd-mobile'
 
 @connect(({bibaDeatil, index})=>({...bibaDeatil, ...index}))
 class BiBaDetail extends PureComponent {
-    
+    constructor(props) {
+        super(props);
+
+        this.state = {
+
+        };
+    }
 
     render() {
         let {
