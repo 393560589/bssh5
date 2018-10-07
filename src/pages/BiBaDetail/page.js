@@ -11,8 +11,79 @@ class BiBaDetail extends PureComponent {
         super(props);
 
         this.state = {
-
+            type: '1',  // 1-》帖子回复  2-》回复评论
+            showComment: false,
+            content: '',
+            index: 0
         };
+    }
+
+    componentDidMount() {
+        const { location } = this.props;
+        let params = location.query;
+
+        this.setState({
+            id: params.id
+        });
+    }
+
+    /**
+     * 回复弹出
+     * @type 一级回复  1 =》 一级   2 =》 2级
+     * @id 帖子id
+     * @pid 二级id
+     */ 
+    handleSaySome = (type, pid, index) => {
+        this.setState({
+            type,
+            pid,
+            index,
+            showComment: true
+        });
+    }
+
+    // 回复
+    postData = () => {
+        const { type, id, pid, phone, content, index } = this.state;
+        const { dispatch } = this.props;
+
+        if(type == '1') {
+            dispatch({
+                type: 'bibaDeatil/postOne',
+                payload: {
+                    article_id: id,
+                    content,
+                    user_phone: '15257741312'
+                }
+            });
+        }
+        else if(type == '2') {
+            dispatch({
+                type: 'bibaDeatil/postTwo',
+                payload: {
+                    article_id: id,
+                    pid,
+                    content,
+                    user_phone: '15257741312'
+                },
+                callback: () => {
+                    const { bibaDeatilOneBack, bibaDeatil } = this.props;
+                    if(bibaDeatilOneBack) {
+                        if(bibaDeatilOneBack[index] && bibaDeatilOneBack[index].res2) {
+                            bibaDeatilOneBack[index].res2.push({
+                                username: bibaDeatil && bibaDeatil.username || '无',
+                                content,
+                            })
+
+                            dispatch({
+                                type: 'bibaDeatil/updateComment',
+                                payload: bibaDeatilOneBack
+                            });
+                        }
+                    }
+                }
+            });
+        }
     }
 
     render() {
@@ -58,7 +129,7 @@ class BiBaDetail extends PureComponent {
 
                 <div className='mt-8'>
                     {
-                        bibaDeatilOneBack && bibaDeatilOneBack.length > 0 && bibaDeatilOneBack.map(v => {
+                        bibaDeatilOneBack && bibaDeatilOneBack.length > 0 && bibaDeatilOneBack.map((v, index) => {
                             return (
                                 <div className={style.detail_box} key={ v.id }>
                                     <div className={style.detail_info_box}>
@@ -80,6 +151,9 @@ class BiBaDetail extends PureComponent {
                                             })
                                         }
                                     </div>
+                                    {/* <div className={style.comment_btns}>
+                                        <button onClick={ () => this.handleSaySome('1', v.id)}>回复</button>
+                                    </div> */}
                                     {
                                         v.res2 && v.res2.length > 0
                                             ? <React.Fragment>
@@ -95,33 +169,43 @@ class BiBaDetail extends PureComponent {
                                                         })
                                                     }
                                                 </div>
-                                                <div className={style.comment_btns}>
-                                                    <button onClick={ () => { alert(JSON.stringify(params)) }}>回复</button>
-                                                </div>
+                                                {/* <div className={style.comment_btns}>
+                                                    <button onClick={ () => this.handleSaySome('2', v.id)}>回复</button>
+                                                </div> */}
                                             </React.Fragment>
                                             : null
                                     }
+                                    <div className={style.comment_btns}>
+                                        <button onClick={ () => this.handleSaySome('2', v.id, index)}>回复</button>
+                                    </div>
                                 </div>
                             )
                         })
                     }
                 </div>
 
-                <div className="mt-8 bg-ff">
+                <div className="mt-8 bg-ff" onClick={ () => this.handleSaySome('1') }>
                     <CommentInput />
                 </div>
-
-                <div className={`${ style.comment_input_box } bg-ff`}>
-                    <div className={style.comment_title}>
-                        <div className={style.cancel}>取消</div>
-                        <div className={style.ok}>发布</div>
-                    </div>
-                    <TextareaItem
-                        placeholder="说点什么吧。。。"
-                        labelNumber={5}
-                        rows={4}
-                    />
-                </div>
+                
+                {
+                    this.state.showComment ? 
+                        <div className={`${ style.comment_input_box } bg-ff`}>
+                            <div className={style.mask} onClick={ () => { this.setState({ showComment: false }) } }></div>
+                            <div className={style.comment_title}>
+                                <div className={style.cancel} onClick={ () => { this.setState({ showComment: false }) } }>取消</div>
+                                <div className={style.ok} onClick={ () => this.postData() }>发布</div>
+                            </div>
+                            <TextareaItem
+                                placeholder="说点什么吧。。。"
+                                labelNumber={5}
+                                rows={4}
+                                value={this.state.content}
+                                onChange={ (val) => this.setState({ content: val }) }
+                            />
+                        </div> : null
+                }
+                
             </div>
         )
     }

@@ -14,3 +14,13 @@ export async function getBiBaDetail(params) {
 export async function getBiBaDetailOneBack(params) {
   return axios.get('/mobile/mobile_interface/article_one_back', { params: { ...params }})
 }
+
+// 回复一级
+export async function postOne(params) {
+  return axios.get('/mobile/mobile_interface/answer_one', { params: { ...params } })
+}
+
+// 回复二级
+export async function postTwo(params) {
+  return axios.get('/mobile/mobile_interface/answer_two', { params: { ...params } })
+}
