@@ -34,11 +34,15 @@ class BiBaDetail extends PureComponent {
      * @pid 二级id
      */ 
     handleSaySome = (type, pid, index) => {
+        const that = this;
+
         this.setState({
             type,
             pid,
             index,
             showComment: true
+        }, () => {
+            that.TextareaItemRefs.focus()
         });
     }
 
@@ -54,6 +58,28 @@ class BiBaDetail extends PureComponent {
                     article_id: id,
                     content,
                     user_phone: '15257741312'
+                },
+                callback: (data) => {
+                    const { bibaDeatilOneBack, bibaDeatil } = this.props;
+                    this.setState({
+                        content: '',
+                        showComment: false
+                    });
+                    if(bibaDeatilOneBack) {
+                        bibaDeatilOneBack.push({
+                            username: bibaDeatil && bibaDeatil.username || '无',
+                            content,
+                            addtime: parseInt((+new Date())/1000),
+                            headimgurl: bibaDeatil && bibaDeatil.headimgurl || '',
+                            id: data.id,
+                            res2: []
+                        })
+
+                        dispatch({
+                            type: 'bibaDeatil/updateComment',
+                            payload: bibaDeatilOneBack
+                        });
+                    }
                 }
             });
         }
@@ -68,6 +94,10 @@ class BiBaDetail extends PureComponent {
                 },
                 callback: () => {
                     const { bibaDeatilOneBack, bibaDeatil } = this.props;
+                    this.setState({
+                        content: '',
+                        showComment: false
+                    });
                     if(bibaDeatilOneBack) {
                         if(bibaDeatilOneBack[index] && bibaDeatilOneBack[index].res2) {
                             bibaDeatilOneBack[index].res2.push({
@@ -197,6 +227,7 @@ class BiBaDetail extends PureComponent {
                                 <div className={style.ok} onClick={ () => this.postData() }>发布</div>
                             </div>
                             <TextareaItem
+                                ref={ (el) => { this.TextareaItemRefs = el } }
                                 placeholder="说点什么吧。。。"
                                 labelNumber={5}
                                 rows={4}
