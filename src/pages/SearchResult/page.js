@@ -204,9 +204,9 @@ class SearchResult extends PureComponent {
     let key = new RegExp(this.state.keyword,'igm')
     title = title.replace(key, html);
     description = description.replace(key, html);
-
+    //this.setState({loading: true}, function() {window.location.href=url});
     return (
-      <section key={id} className="p-15 mb-8" onClick={() => {this.setState({loading: true}, function() {window.location.href=url});}}>
+      <section key={id} className="p-15 mb-8" onClick={() => { window.postMessage(JSON.stringify({type: 'WebViews', url}), '*') }}>
         <h3 dangerouslySetInnerHTML={{__html:title}} />
         <p className="mb-8" dangerouslySetInnerHTML={{__html:description}}/>
         <a className={styles.link}>查看更多</a>
