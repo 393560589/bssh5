@@ -115,10 +115,10 @@ class SearchResult extends PureComponent {
       <section className="p-15">
         <section className={styles.top}>
           <span>1{currency}=</span>
-          <p style={{fontSize: '.24rem'}}>{price}USD</p>
+          <p style={{fontSize: '.24rem'}}>{price}RMB</p>
         </section>
         <section className={styles.top}>
-          <h4 style={{fontSize: '.12rem', marginBottom: '.2rem'}}>{change}</h4>
+          <h4 style={{fontSize: '.12rem', marginBottom: '.2rem'}}>{change}USD</h4>
           <span style={{fontSize: '.15rem'}}>市值:${marketCap}<br/>全球交易量(24h):${vol}</span>
         </section>
       </section>
@@ -131,7 +131,7 @@ class SearchResult extends PureComponent {
       <section className="p-15 mb-8" onClick={() => router.push(`/BaiWiKi?id=${id}`)}>
         <h3>{title}</h3>
           <div className="ds-fs">
-            <img src={img} alt="" className={styles.image}/>
+            <img src={`http://www.bitss.pro/static${img}`} alt="头像" className={styles.image}/>
             <p
               ref={v => this.p = v}
               dangerouslySetInnerHTML={{__html: content}}
@@ -194,7 +194,7 @@ class SearchResult extends PureComponent {
     return (
       <section className="p-15 mb-8">
         <h3>近期关于<b className={'_high'}>{this.state.keyword}</b>的相关新闻</h3>
-        {news && news.map(n => <p className="mb-8" key={n.title} onClick={() => { this.setState({loading: true}, function() {window.location.href=n.url})}}><a href="#">{n.title}</a></p>)}
+        {news && news.map(n => <p className={styles.newsLink} key={n.title} onClick={() => { this.setState({loading: true}, function() {window.location.href=n.url})}}><a href="#">{n.title}</a></p>)}
       </section>
     )
   }
