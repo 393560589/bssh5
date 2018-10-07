@@ -3,7 +3,7 @@ import style from './Index.less'
 import { Icon } from 'antd-mobile'
 
 const Header = (props) => {
-    const { title = '标题' } = props;
+    const { title = '标题', type, id } = props;
 
   	return (
     	<div className={style.header}>
@@ -13,7 +13,11 @@ const Header = (props) => {
                 </div>
             </div>
             <div className={style.header_center}>{ title }</div>
-            <div className={style.header_right}></div>
+            <div className={style.header_right}>
+            {
+                type == '3' ? <a style={{color: "#4E8CEE"}} href={"/BusinessCard?id=" + id}>生成名片</a> : null
+            }
+            </div>
     	</div>
   	);
 };

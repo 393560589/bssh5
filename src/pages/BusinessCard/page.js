@@ -4,6 +4,7 @@ import { Icon } from 'antd-mobile';
 import xuqiu from '../../assets/businessCard/xuqiu.png';
 import yewu from '../../assets/businessCard/yewu.png';
 import { connect } from 'dva';
+import router from 'umi/router';
 
 @connect(({businessCard})=>({...businessCard}))
 class BusinessCard extends PureComponent {
@@ -47,7 +48,7 @@ class BusinessCard extends PureComponent {
         return (
             <div className={ styles.BusinessCardWrappper }>
                 <header className={ styles.BusinessCard_title }>
-                    <Icon className={ styles.BusinessCard_title_icon } type="left" color="#333333"/>
+                    <Icon className={ styles.BusinessCard_title_icon } onClick={() => { router.goBack() }} type="left" color="#fff"/>
                     <span>名片</span>
                     <Icon onClick={ this.shareCard } className={ styles.BusinessCard_title_icon } type="ellipsis" color="#333333"/>
                 </header>
@@ -90,7 +91,9 @@ class BusinessCard extends PureComponent {
 
     shareCard = () => {
         // 将这个id传给RN
-        let id = this.props.location.query;
+        let query = this.props.location.query;
+
+        window.postMessage(JSON.stringify({type: 'share',data:`//bitss.pro/dist/BusinessCard?id=${query.id}`}), '*');
     }
 }
 

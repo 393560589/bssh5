@@ -44,6 +44,11 @@ class BiBaDetail extends PureComponent {
     handleSaySome = (type, pid, index) => {
         const that = this;
 
+        if(!this.state.phone) {
+            window.postMessage(JSON.stringify({type: 'login', id: this.state.id}), '*');
+            return;
+        }
+
         this.setState({
             type,
             pid,
