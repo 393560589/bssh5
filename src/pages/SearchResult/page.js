@@ -2,6 +2,7 @@ import React, { PureComponent } from 'react'
 import styles from './index.less'
 import {resultFix, resultFlow} from '../../services/search'
 import router from 'umi/router'
+import { ActivityIndicator } from 'antd-mobile'
 
 class SearchResult extends PureComponent {
   constructor() {
@@ -18,7 +19,8 @@ class SearchResult extends PureComponent {
       flowPage: 1,
       keyword: '',
       phone: '',
-      totalPage: ''
+      totalPage: '',
+      loading: false
     }
   }
 
@@ -176,7 +178,7 @@ class SearchResult extends PureComponent {
     return (
       <section className="p-15 mb-8">
         <h3>近期关于<b className={'_high'}>{this.state.keyword}</b>的相关新闻</h3>
-        {news && news.map(n => <p className="mb-8" key={n.title}><a href={n.url}>{n.title}</a></p>)}
+        {news && news.map(n => <p className="mb-8" key={n.title} onClick={() => { this.setState({loading: true}, function() {window.location.href=n.url})}}><a href="#">{n.title}</a></p>)}
       </section>
     )
   }
@@ -188,7 +190,7 @@ class SearchResult extends PureComponent {
     description = description.replace(key, html);
 
     return (
-      <section key={id} className="p-15 mb-8" onClick={() => {window.location.href=url}}>
+      <section key={id} className="p-15 mb-8" onClick={() => {this.setState({loading: true}, function() {window.location.href=url});}}>
         <h3 dangerouslySetInnerHTML={{__html:title}} />
         <p className="mb-8" dangerouslySetInnerHTML={{__html:description}}/>
         <a className={styles.link}>查看更多</a>
@@ -232,7 +234,8 @@ class SearchResult extends PureComponent {
   render() {
     const { baike, ba, app, post, news, others } = this.state
     return (
-      this.state.error
+      <div>
+      { this.state.error
         ? (<div className={styles.empty}>
             <img src={require('../../assets/result/empty@2x.png')} alt=""/>
             <p>未找到{`"${router.location.query.keyword}"`}相关结果</p>
@@ -248,7 +251,13 @@ class SearchResult extends PureComponent {
           {this.renderHots()}
           {this.renderPagination()}
         </div>)
-
+      }
+      <ActivityIndicator
+        toast
+        text="加载中..."
+        animating={this.state.loading}
+      />
+      </div>
     )
   }
 }

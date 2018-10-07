@@ -17,7 +17,7 @@ function getQueryString(name) {
 // 时间格式化
 function formatData(time) {
 
-    var d = time ? new Date(time) : new Date();
+    var d = time ? new Date(time * 1000) : new Date();
     var year = d.getFullYear();
     var month = change(d.getMonth()+1);
     var day = change(d.getDate());

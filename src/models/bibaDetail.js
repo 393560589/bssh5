@@ -13,8 +13,13 @@ export default {
         setup({ dispatch, history }) {
           return history.listen(({pathname, query}) => {
             if (pathname === '/BiBaDetail') {
-              dispatch({type: 'getBiBaDetail', payload: query})
-              dispatch({type: 'getBiBaDetailOneBack', payload: { id: 49 }})
+                alert(JSON.stringify(query));
+                dispatch({type: 'getBiBaDetail', payload: query})
+                dispatch({type: 'getBiBaDetailOneBack', payload: { id: 49 }})
+
+                if(!query.phone) {
+                    window.postMessage(JSON.stringify({type: 'login', id: query.id}), '*');
+                }
             }
           })
         },

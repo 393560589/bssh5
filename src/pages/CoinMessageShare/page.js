@@ -55,7 +55,7 @@ class CoinMessageShare extends PureComponent {
                 top:'0',
                 width:'100vw'
               }}>
-                <p onClick={()=>router.goBack()} style={{fontSize:'.14rem',color:'#666'}}>返回</p>
+                <p onClick={()=>router.push('/CoinMessage')} style={{fontSize:'.14rem',color:'#666'}}>返回</p>
                 <p style={{fontSize:'.16rem',color:'#222'}}>币讯详情</p>
                 <p style={{fontSize:'.14rem',color:'#666'}} onClick={()=>this.share()}>分享</p>
               </div>
