@@ -1,5 +1,4 @@
 import * as server from '../services/bibaDetail';
-import { PathPlugin } from 'awesome-typescript-loader/dist/paths-plugin';
 export default {
 
     namespace: 'bibaDeatil',
