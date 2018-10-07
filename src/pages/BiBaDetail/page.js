@@ -22,8 +22,16 @@ class BiBaDetail extends PureComponent {
         const { location } = this.props;
         let params = location.query;
 
+        let phone = params.phone;
+        if (phone === 'undefined' || phone === undefined || phone === '') {
+            phone = localStorage.getItem('bss_user_phone');
+        } else {
+            localStorage.setItem('bss_user_phone', phone);
+        }
+
         this.setState({
-            id: params.id
+            id: params.id,
+            phone
         });
     }
 
@@ -57,7 +65,7 @@ class BiBaDetail extends PureComponent {
                 payload: {
                     article_id: id,
                     content,
-                    user_phone: '15257741312'
+                    user_phone: phone
                 },
                 callback: (data) => {
                     const { bibaDeatilOneBack, bibaDeatil } = this.props;
@@ -66,7 +74,7 @@ class BiBaDetail extends PureComponent {
                         showComment: false
                     });
                     if(bibaDeatilOneBack) {
-                        bibaDeatilOneBack.push({
+                        bibaDeatilOneBack.unshift({
                             username: bibaDeatil && bibaDeatil.username || '无',
                             content,
                             addtime: parseInt((+new Date())/1000),
@@ -90,7 +98,7 @@ class BiBaDetail extends PureComponent {
                     article_id: id,
                     pid,
                     content,
-                    user_phone: '15257741312'
+                    user_phone: phone
                 },
                 callback: () => {
                     const { bibaDeatilOneBack, bibaDeatil } = this.props;
@@ -100,7 +108,7 @@ class BiBaDetail extends PureComponent {
                     });
                     if(bibaDeatilOneBack) {
                         if(bibaDeatilOneBack[index] && bibaDeatilOneBack[index].res2) {
-                            bibaDeatilOneBack[index].res2.push({
+                            bibaDeatilOneBack[index].res2.unshift({
                                 username: bibaDeatil && bibaDeatil.username || '无',
                                 content,
                             })
@@ -122,14 +130,7 @@ class BiBaDetail extends PureComponent {
             bibaDeatilOneBack,
             location
         } = this.props;
-
-        let params = location.query;
-        let phone = params.phone;
-        if (phone === 'undefined' || phone === undefined || phone === '') {
-            phone = localStorage.getItem('bss_user_phone');
-        } else {
-            localStorage.setItem('bss_user_phone', phone);
-        }
+        const { phone } = this.state;
 
         return (
             <div className='mh-100 bg-f5'>
