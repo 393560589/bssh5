@@ -118,19 +118,45 @@
 }
 
 .comment_input_box {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+
+    .mask {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0, 0, 0, .4);
+    }
 
     .comment_title {
         display: flex;
         flex-direction: row;
         justify-content: space-between;
+        background-color: #fff;
+        position: relative;
+        z-index: 10;
 
         div {
-            width: .6rem;
-            height: .4rem;
+            text-align: center;
             font-size: .15rem;
             color: #666;
 
+            &.ok {
+                margin: .2rem .1rem .1rem .2rem;
+                padding: .06rem .1rem;
+                background-color: #4E8CEE;
+                border-radius: .2rem;
+                color: #fff;
+            }
 
+            &.cancel {
+                margin: .2rem .1rem .1rem 0;
+                padding: .06rem .1rem;
+            }
         }
     }
 }

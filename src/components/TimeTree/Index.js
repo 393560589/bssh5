@@ -88,7 +88,7 @@ const TimeTree = (props) => {
                                 <div onClick={()=>{
                                   router.push(`/CoinMessageShare?id=${item.id}`)
                                 }}>
-                                  <SecTitle title={formatData(parseInt(item.created_at) * 1000)}/>
+                                  <SecTitle title={formatData(parseInt(item.created_at))}/>
                                   <Content title="" content={item.content.length > 100 ? (item.content.substr(0, 100) + '...') : item.content} />
                                 </div>
                                 <Share onShare={()=>{

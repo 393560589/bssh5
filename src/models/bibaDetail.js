@@ -1,4 +1,5 @@
 import * as server from '../services/bibaDetail';
+import { PathPlugin } from 'awesome-typescript-loader/dist/paths-plugin';
 export default {
 
     namespace: 'bibaDeatil',
@@ -13,7 +14,6 @@ export default {
         setup({ dispatch, history }) {
           return history.listen(({pathname, query}) => {
             if (pathname === '/BiBaDetail') {
-                // alert(JSON.stringify(query));
                 dispatch({type: 'getBiBaDetail', payload: query})
                 dispatch({type: 'getBiBaDetailOneBack', payload: { id: 49 }})
 
@@ -43,6 +43,19 @@ export default {
 					payload: res.data.res
                 });
 			}
+        },
+
+        *postOne({payload, callback}, { call, put }) {
+            const res = yield call(server.postOne, payload)
+            if(res.data && res.data.status === 200) {
+				callback();
+			}
+        },
+        *postTwo({payload, callback}, { call, put }) {
+            const res = yield call(server.postTwo, payload)
+            if(res.data && res.data.status === 200) {
+				callback();
+			}
         }
     },
 
@@ -58,6 +71,12 @@ export default {
                 ...state,
                 bibaDeatilOneBack: payload
             }
+        },
+        updateComment(state, { payload }) {
+            return{
+                ...state,
+                bibaDeatilOneBack: payload
+            };
         }
     },
 
