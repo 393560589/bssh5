@@ -248,7 +248,7 @@ class SearchResult extends PureComponent {
   }
 
   render() {
-    const { baike, ba, app, post, news, others } = this.state
+    const { baike, ba, app, post, news, others, flowPage } = this.state
     return (
       <div>
       { this.state.error
@@ -257,12 +257,12 @@ class SearchResult extends PureComponent {
             <p>未找到{`"${router.location.query.keyword}"`}相关结果</p>
         </div>)
         : (<div className={styles.container}>
-          {this.renderPrice()}
-          {baike && this.renderBaiWiki()}
-          {ba && this.renderBa()}
-          {app && this.renderApp()}
-          {post && post.length && this.renderPost()}
-          {news && news.length && this.renderNews()}
+          {flowPage === 1 && this.renderPrice()}
+          {flowPage === 1 && baike && this.renderBaiWiki()}
+          {flowPage === 1 && ba && this.renderBa()}
+          {flowPage === 1 && app && this.renderApp()}
+          {flowPage === 1 && post && post.length > 0 && this.renderPost()}
+          {flowPage === 1 && news && news.length > 0 && this.renderNews()}
           {others.map(item => this.renderOther(item))}
           {this.renderHots()}
           {this.renderPagination()}
