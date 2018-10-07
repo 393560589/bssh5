@@ -88,8 +88,7 @@ class SearchResult extends PureComponent {
       if (prev.flowPage > 1) {
         return { flowPage: prev.flowPage - 1}
       }
-    }))
-    this.fetchFlowResult(keyword)
+    }), () => this.fetchFlowResult(keyword))
   }
 
   goNext = () => { //
@@ -99,8 +98,7 @@ class SearchResult extends PureComponent {
       if (prev.flowPage < totalPage) {
         return { flowPage: prev.flowPage + 1}
       }
-    }))
-    this.fetchFlowResult(keyword)
+    }), () => this.fetchFlowResult(keyword))
     window.scroll(0, 0)
   }
 
@@ -244,7 +242,7 @@ class SearchResult extends PureComponent {
     return (
       <section className="mt-8 ds-f p-8">
         <img src={require('../../assets/arrow-left.png')} alt="" className={styles.icon} onClick={this.goPrev}/>
-        <span className={styles.page}>第 {this.state.flowPage} 页</span>
+        <span className={styles.page}>第 {this.state.flowPage} / {this.state.totalPage} 页</span>
         <img src={require('../../assets/arrow-right.png')} alt="" className={styles.icon} onClick={this.goNext}/>
       </section>
     )
