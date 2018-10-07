@@ -2,7 +2,7 @@ import React, { PureComponent } from 'react'
 import styles from './index.less'
 import router from 'umi/router'
 import { connect } from 'dva';
-import { formate } from '../../utils/date';
+import formate from '../../utils/date';
 
 
 @connect(({biba, loading}) => ({...biba, loading}))

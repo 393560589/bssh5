@@ -40,8 +40,8 @@ class SearchResult extends PureComponent {
       // 搜索结果为空或请求出错
       this.setState({error: true})
     } else {
-      const { baike, ba, news, about_post: post, hot_words: hotWords, app } = result
-      this.setState({baike, ba, news, post, hotWords, app})
+      const { baike, ba, news, about_post: post, hot_words: hotWords, app, hangqing } = result
+      this.setState({baike, ba, news, post, hotWords, app, hangqing})
     }
   }
 
@@ -89,15 +89,17 @@ class SearchResult extends PureComponent {
   }
 
   renderPrice = () => {
+    if (!this.state.hangqing) return null;
+    const { currency, price, change, marketCap, vol } = this.state.hangqing;
     return (
       <section className="p-15">
         <section className={styles.top}>
-          <span>1EOS=</span>
-          <p style={{fontSize: '.24rem'}}>4.93USD</p>
+          <span>1{currency}=</span>
+          <p style={{fontSize: '.24rem'}}>{price}USD</p>
         </section>
         <section className={styles.top}>
-          <h4 style={{fontSize: '.12rem', marginBottom: '.2rem'}}>-0.0986USD(-2.0%)</h4>
-          <span style={{fontSize: '.15rem'}}>市值:$44.68亿<br/>全球交易量(24h):$5.34亿</span>
+          <h4 style={{fontSize: '.12rem', marginBottom: '.2rem'}}>{change}</h4>
+          <span style={{fontSize: '.15rem'}}>市值:${marketCap}<br/>全球交易量(24h):${vol}</span>
         </section>
       </section>
     )
