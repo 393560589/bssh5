@@ -10,7 +10,7 @@ export default {
   subscriptions: {
     setup({ dispatch, history }) {
       return history.listen(({pathname, query}) => {
-        console.log(query)
+        console.log(query.phone, ' biba phone')
         if (pathname === '/BiBa') {
           // dispatch({type: 'fetchList', payload: query})
           // dispatch({type: 'fetchBarInfo', payload: query})

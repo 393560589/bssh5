@@ -28,11 +28,18 @@ class SearchResult extends PureComponent {
 
   componentDidMount() {
     let {location: { query: { keyword, phone } }} = router;
-    // let _phone;
-    if (this.props.phone) {
-      phone = this.props.phone
+    // let phone = query.phone;
+    console.log(phone);
+    if (phone === 'undefined' || phone === '' || phone === undefined) {
+      if (window.history.length === 1) {
+        console.log('length = 1');
+        localStorage.setItem('bss_user_phone', phone);
+      } else {
+        phone = localStorage.getItem('bss_user_phone');
+      }
     } else {
-      this.props.dispatch({type: 'index/save', payload: {phone}})
+      console.log('set phone')
+      localStorage.setItem('bss_user_phone', phone);
     }
 
     this.setState({keyword, phone})

@@ -124,12 +124,11 @@ class BiBaDetail extends PureComponent {
         } = this.props;
 
         let params = location.query;
-        let phone;
-        if (this.props.phone) {
-            phone = this.props.phone;
+        let phone = params.phone;
+        if (phone === 'undefined' || phone === undefined || phone === '') {
+            phone = localStorage.getItem('bss_user_phone');
         } else {
-            phone = params.phone;
-            this.props.dispatch({type: 'index/save', payload: {phone}})
+            localStorage.setItem('bss_user_phone', phone);
         }
 
         return (
