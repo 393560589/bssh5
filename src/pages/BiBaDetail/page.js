@@ -5,7 +5,7 @@ import { CommentInput } from 'components'
 import formate from '../../utils/date.js'
 import { TextareaItem } from 'antd-mobile'
 
-@connect(({bibaDeatil})=>({...bibaDeatil}))
+@connect(({bibaDeatil, index})=>({...bibaDeatil, ...index}))
 class BiBaDetail extends PureComponent {
     
 
@@ -17,6 +17,13 @@ class BiBaDetail extends PureComponent {
         } = this.props;
 
         let params = location.query;
+        let phone;
+        if (this.props.phone) {
+            phone = this.props.phone;
+        } else {
+            phone = params.phone;
+            this.props.dispatch({type: 'index/save', payload: {phone}})
+        }
 
         return (
             <div className='mh-100 bg-f5'>
