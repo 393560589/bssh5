@@ -47,7 +47,7 @@ class CoinMessageShare extends PureComponent {
 
         return (
             <div className={style.share_wrapper}>
-              <div className={'ds-fa pl-28 pr-28'} style={{
+              <div className={'ds-fa'} style={{
                 justifyContent:"space-between",
                 backgroundColor:'#fff',
                 height:'.44rem',
@@ -55,9 +55,10 @@ class CoinMessageShare extends PureComponent {
                 top:'0',
                 width:'100vw'
               }}>
-                <p onClick={()=>router.push('/CoinMessage')} style={{fontSize:'.14rem',color:'#666'}}>返回</p>
+                <p onClick={()=>router.push('/CoinMessage')}
+                   style={{fontSize:'.14rem',color:'#666',width:'.6rem',lineHeight:'.44rem',textAlign:'center'}}>返回</p>
                 <p style={{fontSize:'.16rem',color:'#222'}}>币讯详情</p>
-                <p style={{fontSize:'.14rem',color:'#666'}} onClick={()=>this.share()}>分享</p>
+                <p style={{fontSize:'.14rem',color:'#666',width:'.6rem',lineHeight:'.44rem',textAlign:'center'}} onClick={()=>this.share()}>分享</p>
               </div>
               <div style={{height:'.44rem'}}/>
               <div style={{flex:1}}>
