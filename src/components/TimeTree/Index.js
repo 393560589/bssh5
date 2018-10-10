@@ -85,9 +85,7 @@ const TimeTree = (props) => {
                         <div key={item.id} style={{marginTop:'10px'}}>
                             <div>
                                 { week ? <Title title={ week }/> : "" }
-                                <div onClick={()=>{
-                                  router.push(`/CoinMessageShare?id=${item.id}`)
-                                }}>
+                                <div>
                                   <SecTitle title={formatData(parseInt(item.created_at))}/>
                                   <Content title="" content={item.content.length > 100 ? (item.content.substr(0, 100) + '...') : item.content} />
                                 </div>
