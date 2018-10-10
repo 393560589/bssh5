@@ -28,7 +28,8 @@ class CoinMessage extends PureComponent {
             page: 1,
             len: 10
         },
-        hasMore: true
+        hasMore: true,
+        current: -1
     }
     componentWillUnmount(){
       //console.log('走掉')
@@ -138,10 +139,18 @@ class CoinMessage extends PureComponent {
         });
     }
 
+    handleChangeCurrent = (index) => {
+        const { current } = this.state;
+
+        this.setState({
+            current: index === current ? -1 : index
+        });
+    }
+
     render() {
         const that = this;
         const { coinList, panigation } = that.props;
-        const { hasMore } = that.state;
+        const { hasMore, current } = that.state;
 
         return (
             <div>
@@ -168,7 +177,6 @@ class CoinMessage extends PureComponent {
                                 page: 1
                             }
                         }, () => {
-                            console.log(this.state.panigation);
                             this.getCoinList(true);
                         });
 
@@ -176,7 +184,7 @@ class CoinMessage extends PureComponent {
                 >
                     <div ref="content">
                         <div style={{height: '.1rem'}}/>
-                        <TimeTree data={coinList} {...this.props}/>
+                        <TimeTree data={coinList} current={current} handleChangeCurrent={this.handleChangeCurrent} {...this.props}/>
                         <div className={style.loadMore} onClick={() => this.loadMoreData()}>{hasMore ? '加载更多' : '没有更多数据了'}</div>
                     </div>
                 </PullToRefresh>

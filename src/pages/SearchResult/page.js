@@ -4,6 +4,9 @@ import {resultFix, resultFlow} from '../../services/search'
 import router from 'umi/router'
 import { connect } from 'dva';
 import { ActivityIndicator } from 'antd-mobile'
+import Flexable from '../../utils/flexable'
+
+Flexable.init();
 
 @connect(({index}) => ({...index}))
 class SearchResult extends PureComponent {

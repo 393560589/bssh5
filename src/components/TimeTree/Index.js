@@ -14,50 +14,7 @@ let currentTime = '';
 
 
 const TimeTree = (props) => {
-    const { data,onShare } = props;
-
-    // const data1 = [
-    //     {
-    //       img: 'https://zos.alipayobjects.com/rmsportal/dKbkpPXKfvZzWCM.png',
-    //       title: 'Meet hotel',
-    //       des: '不是所有的兼职汪都需要风吹日晒',
-    //     },
-    //     {
-    //       img: 'https://zos.alipayobjects.com/rmsportal/XmwCzSeJiqpkuMB.png',
-    //       title: 'McDonald\'s invites you',
-    //       des: '不是所有的兼职汪都需要风吹日晒',
-    //     },
-    //     {
-    //       img: 'https://zos.alipayobjects.com/rmsportal/hfVtzEhPzTUewPm.png',
-    //       title: 'Eat the week',
-    //       des: '不是所有的兼职汪都需要风吹日晒',
-    //     },
-    // ];
-
-    // const row = (rowData, sectionID, rowID) => {
-    //     return (
-    //         <div key={rowID} style={{ padding: '0 15px' }}>
-    //                 <div
-    //                     style={{
-    //                         lineHeight: '50px',
-    //                         color: '#888',
-    //                         fontSize: 18,
-    //                         borderBottom: '1px solid #F6F6F6',
-    //                     }} >
-    //                     fuckme
-    //                 </div>
-    //             </div>
-    //     );
-    // };
-
-    // const onEndReached = function(event) {
-    //     // load new data
-    //     // hasMore: from backend data, indicates whether it is the last page, here is false
-    //     if (this.state.isLoading && !this.state.hasMore) {
-    //       return;
-    //     }
-    //     console.log('reach end', event);
-    // }
+    const { data, onShare, current, handleChangeCurrent } = props;
 
     return(
         <div className={style.time_box}>
@@ -85,9 +42,12 @@ const TimeTree = (props) => {
                         <div key={item.id} style={{marginTop:'10px'}}>
                             <div>
                                 { week ? <Title title={ week }/> : "" }
-                                <div>
+                                <div onClick={()=>{
+                                //   router.push(`/CoinMessageShare?id=${item.id}`)
+                                }}>
+
                                   <SecTitle title={formatData(parseInt(item.created_at))}/>
-                                  <Content title="" content={item.content.length > 100 ? (item.content.substr(0, 100) + '...') : item.content} />
+                                  <Content title={item.title} index={index} handleChangeCurrent={handleChangeCurrent} content={(current !== index && item.content.length > 100) ? (item.content.substr(0, 100) + '...') : item.content} />
                                 </div>
                                 <Share onShare={()=>{
                                     window.postMessage(JSON.stringify({type: 'share',data:`//bitss.pro/dist/CoinMessageShare?id=${item.id}`}), '*')
