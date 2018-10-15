@@ -71,18 +71,19 @@ class CoinMessageShare extends PureComponent {
                     <div className={style.share_detail_content}>{ coinDetail && coinDetail.content }</div>
                   </div>
                 </div>
-                <div className={style.share_bottom}>
-                  <div className={style.share_detail_range}>
-                    重要程度：
-                    { coinDetail && coinDetail.grade && that.renderRange(coinDetail.grade) }
-                  </div>
-                 {/* <div style={{fontSize:'.14rem',color:'#666'}} onClick={()=>this.share()}>
+              </div>
+              <div className={style.share_bottom}>
+                <div className={style.share_detail_range}>
+                  重要程度：
+                  { coinDetail && coinDetail.grade && that.renderRange(coinDetail.grade) }
+                </div>
+                {/* <div style={{fontSize:'.14rem',color:'#666'}} onClick={()=>this.share()}>
                     分享
                   </div>*/}
-                </div>
-
               </div>
-
+              <div>
+                <img src={require('../../assets/yay.jpg')} alt="底部"/>
+              </div>
 
                {/* <Drawer
                     className="my-drawer"

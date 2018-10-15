@@ -50,7 +50,7 @@ const TimeTree = (props) => {
                                   <Content title={item.title} index={index} handleChangeCurrent={handleChangeCurrent} content={(current !== index && item.content.length > 100) ? (item.content.substr(0, 100) + '...') : item.content} />
                                 </div>
                                 <Share onShare={()=>{
-                                    window.postMessage(JSON.stringify({type: 'share',data:item.id}), '*')
+                                    window.postMessage(JSON.stringify({type: 'share',data:item}), '*')
                                 }} id={item.id} {...props} />
                             </div>
                         </div>
