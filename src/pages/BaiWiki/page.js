@@ -58,9 +58,10 @@ class BaiWiki extends PureComponent {
                 </div>
 
                 {
-                    cont_type === 3 ? <div className="mt-8">
-                                        <Expand type={0} title={'人物事迹'} data={baiWikiDetail && baiWikiDetail.baike && baiWikiDetail.baike.article_content || ''} />
-                                    </div> : null
+                    cont_type === 3 ?
+                      baiWikiDetail && baiWikiDetail.baike && baiWikiDetail.baike.article_content &&(<div className="mt-8">
+                                        <Expand type={0} title={'人物事迹'} data={ baiWikiDetail.baike.article_content || ''} />
+                                    </div>) : null
                 }
 
                 {/* <div className="mt-8 bg-ff">
@@ -76,13 +77,17 @@ class BaiWiki extends PureComponent {
                         <GradList />
                     </div>
                 </div> */}
-
-                <div className="mt-8 bg-ff">
+              {
+                baiWikiDetail.news &&  baiWikiDetail.news.length>0 && (
+                  <div className="mt-8 bg-ff">
                     <div className={style.title}>相关新闻</div>
                     <div className={style.scroll_box}>
-                        <CommentList data={baiWikiDetail.news} handleClick={ this.handleClick } />
+                      <CommentList data={baiWikiDetail.news} handleClick={ this.handleClick } />
                     </div>
-                </div>
+                  </div>
+                )
+              }
+
 
                 <ActivityIndicator
                     toast

@@ -268,7 +268,7 @@ class SearchResult extends PureComponent {
           {flowPage === 1 && this.renderPrice()}
           {flowPage === 1 && baike && this.renderBaiWiki()}
           {flowPage === 1 && ba && this.renderBa()}
-          {flowPage === 1 && app && this.renderApp()}
+        {/*  {flowPage === 1 && app && this.renderApp()}*/}
           {flowPage === 1 && post && post.length > 0 && this.renderPost()}
           {flowPage === 1 && news && news.length > 0 && this.renderNews()}
           {others.map(item => this.renderOther(item))}

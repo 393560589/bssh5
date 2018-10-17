@@ -93,7 +93,7 @@ class BusinessCard extends PureComponent {
         // 将这个id传给RN
         let query = this.props.location.query;
 
-        window.postMessage(JSON.stringify({type: 'share',data:`//bitss.pro/dist/BusinessCard?id=${query.id}`}), '*');
+        window.postMessage(JSON.stringify({type: 'share',data:`https://bitss.pro/static/img/index/shichang-erweima.jpg`}), '*');
     }
 }
 

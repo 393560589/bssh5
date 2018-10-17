@@ -10,7 +10,11 @@ const HeaderBar = (props) => {
 
   	return (
     	<div className={style.header_bar}>
-            <Header title={titles[data && data.cont_type]} type={data && data.cont_type} id={data && data.id} />
+            <Header title={titles[data && data.cont_type]}
+                    type={data && data.cont_type}
+                    id={data && data.id}
+                    article_content={data && data.card_desc }
+            />
             <Content data={data} />
     	</div>
   	);
